@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
 from datetime import datetime
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 
 class Conversation(db.Model, UserMixin):
@@ -16,6 +17,8 @@ class Conversation(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now)
+    
+    messages = relationship('Message', backref='conversation')
 
     def to_dict(self):
         return {

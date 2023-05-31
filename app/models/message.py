@@ -7,12 +7,17 @@ from datetime import datetime
 class Message(db.Model, UserMixin):
     __tablename__ = 'messages'
 
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
-    conversation_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('conversations.id')), nullable=False)
+    conversation_id = db.Column(db.Integer, db.ForeignKey(
+        add_prefix_for_prod('conversations.id')), nullable=False)
     message = db.Column(db.Text)
     ai_response = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
+    updated_at = db.Column(
+        db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     def to_dict(self):
         return {
