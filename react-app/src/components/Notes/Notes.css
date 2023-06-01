@@ -1,0 +1,36 @@
+
+.note-page {
+    color: #fff;
+    background-color: #000;
+}
+.note-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://res.cloudinary.com/dtzv3fsas/image/upload/v1685526300/Personal%20Assistant/hollow_knight_wayward_compass_sa4hjg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.note-textarea {
+  width: 25%;
+  height: 25%;
+  padding: 20px;
+  font-size: 16px;
+}
+
+
+@media (max-width: 600px) {
+  .custom-textarea {
+    width: 50%;
+    height: 40%;
+  }
+}
+
+.svg-inline--fa.fa-pen {
+    justify-self: center;
+    align-self: center;
+}

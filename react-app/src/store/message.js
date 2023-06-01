@@ -15,6 +15,7 @@ const postMessageAC = (data) => ({
 
 // thunk action creators - for asynchronous code, i.e., fetch calls prior to dispatching action creators
 export const postMessage = (message) => async (dispatch) => {
+
   const response = await fetch('/api/messages', {
     method: 'POST',
     headers: {
@@ -27,13 +28,13 @@ export const postMessage = (message) => async (dispatch) => {
     const data = await response.json();
     dispatch(postMessageAC(data));
     return data;
-//   } else if (response.status < 500) {
-//     const data = await response.json();
-//     if (data.errors) {
-//       return data.errors;
-//     }
-//   } else {
-//     return ["An error occurred. Please try again."];
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
   }
 }
 

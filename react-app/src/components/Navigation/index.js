@@ -8,9 +8,24 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul>
+		<ul className='flex-row nav-container'>
 			<li>
 				<NavLink exact to="/">Home</NavLink>
+			</li>
+			<li>
+				<NavLink exact to="/messages">Messages</NavLink>
+			</li>
+			<li>
+				<NavLink exact to="/notes">Notes</NavLink>
+			</li>
+			<li>
+				<NavLink exact to="/reminders">Reminders</NavLink>
+			</li>
+			<li>
+				<NavLink exact to="/alarms">Alarms</NavLink>
+			</li>
+			<li>
+				<NavLink exact to="/testing">Testing</NavLink>
 			</li>
 			{isLoaded && (
 				<li>

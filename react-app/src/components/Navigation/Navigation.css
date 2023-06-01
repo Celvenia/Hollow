@@ -5,3 +5,19 @@
 .hidden {
   display: none;
 }
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  height: 100%;
+}
+
+.fas.fa-user-circle {
+  font-size: 1rem;
+}

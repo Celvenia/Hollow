@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 // import "./Testing.css";
-
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function Testing() {
@@ -11,38 +11,13 @@ export default function Testing() {
   const SpeechRecognitionEvent =
     window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
-  const colors = [
-    "aqua",
-    "azure",
-    "beige",
-    "bisque",
-    "black",
-    "blue",
-    "brown",
-    "chocolate",
-    "coral",
-  ];
+  const [spoken, setSpoken] = useState("");
+  const dispatch = useDispatch()
 
-  // Grammar - separated by semi-colons
-  // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
-  // 2: The second line indicates a type of term that we want to recognize. public declares that it is a public rule,
-  //    the string in angle brackets defines the recognized name for this term (color), and the list of items that
-  //    follow the equals sign are the alternative values that will be recognized and accepted as appropriate values
-  //    for the term. Note how each is separated by a pipe character.
-  const grammar = `#JSGF V1.0; grammar colors; public <color> = ${colors.join(
-    " | "
-  )};`;
-
-  // create new SpeechRecognition and SpeechGrammarList instances
+  // create new SpeechRecognition instances
   const recognition = new SpeechRecognition();
-  const speechRecognitionList = new SpeechGrammarList();
 
-  // This accepts as parameters the string we want to add, plus optionally a weight value that specifies the importance
-  // of this grammar in relation of other grammars available in the list (can be from 0 to 1 inclusive.)
-  speechRecognitionList.addFromString(grammar, 1);
-
-  // Methods available to SpeechRecognition class 
-  recognition.grammars = speechRecognitionList;
+  // Methods available to SpeechRecognition class
   recognition.continuous = false;
   recognition.lang = "en-US";
   recognition.interimResults = false;
@@ -54,14 +29,7 @@ export default function Testing() {
     const bg = document.querySelector("html");
     const hints = document.querySelector(".hints");
 
-    let colorHTML = "";
-    colors.forEach((color, i) => {
-      console.log(color, i);
-      colorHTML += `<span style="background-color:${color};"> ${color} </span>`;
-    });
-    hints.innerHTML = `Tap or click then say a color to change the background color of the app. Try ${colorHTML}.`;
-
-    document.body.onclick = () => {
+    document.getElementById("tap").onclick = () => {
       recognition.start();
       console.log("Ready to receive a color command.");
     };
@@ -73,9 +41,12 @@ export default function Testing() {
       // SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual recognized words.
       // We then return its transcript property to get a string containing the individual recognized result as a string,
       // set the background color to that color, and report the color recognized as a diagnostic message in the UI.
-      const color = event.results[0][0].transcript;
-      diagnostic.textContent = `Result received: ${color}.`;
-      bg.style.backgroundColor = color;
+      const result = event.results;
+      // console.log(result)
+      const speechInput = event.results[0][0].transcript;
+      setSpoken(speechInput)
+      diagnostic.textContent = `Result received: ${speechInput}.`;
+      // bg.style.backgroundColor = color;
       console.log(`Confidence: ${event.results[0][0].confidence}`);
     };
 
@@ -87,13 +58,16 @@ export default function Testing() {
 
     // Handling errors and unrecognized speech
     recognition.onnomatch = (event) => {
-      diagnostic.textContent = "I didn't recognize that color.";
+      diagnostic.textContent = "I didn't recognize that.";
     };
 
     recognition.onerror = (event) => {
       diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
     };
-  });
+    return () => {
+      recognition.abort();
+    };
+  }, []);
 
   // init SpeechSynth api
   const synth = window.speechSynthesis;
@@ -128,7 +102,6 @@ export default function Testing() {
 
     const speak = () => {
       if (synth.speaking) {
-        console.log("Already Speaking");
         return;
       }
       if (textInput.value !== "") {
@@ -151,6 +124,8 @@ export default function Testing() {
         voices.forEach((voice) => {
           if (voice.name === selectedVoice) {
             speakText.voice = voice;
+            console.log(speakText, 'speak Text')
+            console.log(voice, 'speakText voice?')
           }
         });
 
@@ -172,6 +147,8 @@ export default function Testing() {
     voiceSelect.addEventListener("change", (e) => speak());
   }, []);
 
+
+
   return (
     <div className="flex-column-center">
       <h1>Testing</h1>
@@ -182,13 +159,13 @@ export default function Testing() {
       </form>
 
       <div>
-        <h1>Speech color changer</h1>
-        <p>
-          Tap/click then say a color to change the background color of the app.
-        </p>
+        <button>Testing</button>
+        <h1>Speech</h1>
+        <button id="tap">
+          Listen
+        </button>
         <div>
-          <p class="output">
-            <em class="hints">…diagnostic messages</em>
+          <p className="output">
           </p>
         </div>
       </div>

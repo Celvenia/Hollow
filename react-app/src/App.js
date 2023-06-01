@@ -5,6 +5,11 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+// import Testing from "./components/Testing";
+import LandingPage from "./components/LandingPage";
+import Notes from "./components/Notes";
+import Message from "./components/Message";
+import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
 import Testing from "./components/Testing";
 
 function App() {
@@ -15,22 +20,41 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
+    <div className="app-container">
+      <header>
+        <Navigation isLoaded={isLoaded} />
+      </header>
       {isLoaded && (
-        <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route exact path="/testing">
-            <Testing />
-          </Route>
-        </Switch>
+        <main>
+          <div className="grid-main">
+            <div className="grid-main-item"><HollowSpeechRecognition/></div>
+            <div className="grid-main-item"></div>
+            <div className="grid-main-item">Testing</div>
+            <div className="grid-main-item">
+              {/* {isLoaded && (
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route exact path="/notes/:id">
+          <Notes />
+        </Route>
+        <Route path="/login">
+          <LoginFormPage />
+        </Route>
+        <Route path="/signup">
+          <SignupFormPage />
+        </Route>
+        <Route exact path="/testing">
+          <Testing />
+        </Route>
+      </Switch>
+    )} */}
+            </div>
+          </div>
+        </main>
       )}
-    </>
+    </div>
   );
 }
 

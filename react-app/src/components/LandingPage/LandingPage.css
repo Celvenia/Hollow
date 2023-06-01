@@ -1,0 +1,35 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+
+.landing-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start center;
+    height: 100vh;
+    background-color: #000; 
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+
+  .content-wrapper {
+    text-align: center;
+  }
+  
+
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .gif-image {
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
