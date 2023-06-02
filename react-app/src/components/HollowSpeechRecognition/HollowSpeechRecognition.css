@@ -1,3 +1,11 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+
+
 .hollow-banner-true {
         background-image: url('../../assets/BannerActive.gif');
         background-repeat: no-repeat;
@@ -15,7 +23,21 @@
 
 }
 
-#hollow-button {
+#hollow-button-true {
+    position: relative;
+    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 5px #FFA500;
+    cursor: pointer;
+  }
+
+#hollow-button-false {
     position: relative;
     background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
     background-repeat: no-repeat;
@@ -26,15 +48,20 @@
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 10px 5px #fff;
+    cursor: pointer;
   }
   
 
 #voice-select {
     width: 20px;
+    height: 10px;
     margin: 10px;
+    cursor: pointer;
 }
 
 #diagnostic {
     color: #FFA500;
     font-weight: bolder;
+    cursor: pointer;
 }
+

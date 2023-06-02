@@ -11,6 +11,7 @@ import Notes from "./components/Notes";
 import Message from "./components/Message";
 import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
 import Testing from "./components/Testing";
+import Clock from "./components/Clock";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,20 +20,22 @@ function App() {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+
   return (
     <div className="app-container">
       <header>
         <HollowSpeechRecognition />
         <Navigation isLoaded={isLoaded} />
+      <h2>Welcome to Hollow</h2>
       </header>
       {isLoaded && (
         <main>
           <div className="grid-main">
             <div className="grid-main-item"><Message /></div>
-            <div className="grid-main-item"></div> 
+            <div className="grid-main-item"><Clock /></div> 
             <div className="grid-main-item"></div>
             <div className="grid-main-item">
-              {/* {isLoaded && 
+              {isLoaded && (
       <Switch>
         <Route exact path="/">
           <LandingPage />
@@ -50,7 +53,7 @@ function App() {
           <Testing />
         </Route>
       </Switch>
-    )} */}
+    )}
             </div>
           </div>
         </main>

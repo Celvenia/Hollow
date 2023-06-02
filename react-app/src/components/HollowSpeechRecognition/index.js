@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
 import { getNotes } from "../../store/note";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 
 import "./HollowSpeechRecognition.css";
 
@@ -49,7 +51,7 @@ export default function HollowSpeechRecognition() {
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop listening", "Hollow"];
+    const keyWords = ["stop", "Hollow"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -142,7 +144,6 @@ export default function HollowSpeechRecognition() {
       };
 
       const processResult = (spoken) => {
-        setDiagnosticText("");
 
         if (!currentUser) {
           speak(
@@ -227,22 +228,26 @@ export default function HollowSpeechRecognition() {
 
   return (
     <div className={`hollow-banner-${active}`}>
-      <div className="flex-row">
-        <select
-          id="voice-select"
-          title="choose voice"
-          onChange={(e) => handleVoiceChange(e.target.value)}
-        >
-          {voices.map((voice, index) => (
-            <option key={index} value={voice.name}>
-              {voice.name} / {voice.lang}
-            </option>
-          ))}
-        </select>
-        <button title="start hollow" id="hollow-button" onClick={hollowStart}>
-          .
-        </button>
-        <p id="diagnostic">{diagnosticText}</p>
+      <div className="flex-column-center">
+
+          <select
+            id="voice-select"
+            title="choose voice"
+            onChange={(e) => handleVoiceChange(e.target.value)}
+          >
+            {voices.map((voice, index) => (
+              <option key={index} value={voice.name}>
+                {voice.name} / {voice.lang}
+              </option>
+            ))}
+          </select>
+
+          <button disabled={active} title="start hollow" id={`hollow-button-${active}`} onClick={hollowStart}>
+            .
+          </button>
+          <div className="flex-row">
+        <p id="diagnostic" onClick={e => setDiagnosticText(e.target.value = "")}>{diagnosticText}</p>
+          </div>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@
 /* #565a75 grey */
 /* #fafbf6 white */
 /* #fff white (generic) */
+/* #FFA500; orange */
 
 * {
   margin: 0;
@@ -12,6 +13,17 @@
 
 body {
   font-family: "Cinzel", serif;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  background-color: #1a1a1a;
+  color: #fafbf6;
+  height: 100%;
+  box-shadow: 1px solid #565a75;
+  height: 4vh;
+  padding-top: 10px;
 }
 
 li {
@@ -33,6 +45,8 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .flex-row {
@@ -47,6 +61,7 @@ a {
 }
 
 header {
+  height: 25vh;
 }
 
 main {
@@ -59,14 +74,19 @@ main {
 .grid-main {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  height: 100vh;
+  height: 80vh;
   width: 100vw;
   background-color: #1a1a1a;
 }
 
 .grid-main-item {
-  background-color: #565a75;
+  background-color: #1a1a1a;
+  /* background-color: #565a75; */
   color: #fafbf6;
-  padding: 20px;
-  border: 1px solid #5d6073;
+  /* border: 1px solid #5d6073; */
+}
+
+.bg {
+  height: 100vh;
+  width: 100vw;
 }

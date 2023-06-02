@@ -1,0 +1,42 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+/* #FFA500; orange */
+
+.clock {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.clock h1 {
+  border: 2px solid #fafbf6;
+  width: 250px;
+  height: auto;
+  /* margin: 20px auto 20px auto; */
+  border-radius: 15px;
+  padding-left: 50px;
+  padding-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #000;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.clock-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #000;
+  border: 2px solid #fafbf6;
+  color: #fafbf6;
+  border-radius: 5px;
+}
+
+.clock-buttons > button {
+  margin: 10px;
+  width: 100%;
+}
