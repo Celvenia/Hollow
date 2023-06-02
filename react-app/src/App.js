@@ -22,16 +22,17 @@ function App() {
   return (
     <div className="app-container">
       <header>
+        <HollowSpeechRecognition />
         <Navigation isLoaded={isLoaded} />
       </header>
       {isLoaded && (
         <main>
           <div className="grid-main">
-            <div className="grid-main-item"><HollowSpeechRecognition/></div>
-            <div className="grid-main-item"></div>
+            <div className="grid-main-item"><Message /></div>
+            <div className="grid-main-item"></div> 
             <div className="grid-main-item">Testing</div>
             <div className="grid-main-item">
-              {/* {isLoaded && (
+              {/* {isLoaded && 
       <Switch>
         <Route exact path="/">
           <LandingPage />

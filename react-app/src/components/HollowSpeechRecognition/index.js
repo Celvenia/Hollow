@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
 import { getNotes } from "../../store/note";
 
-// import "./HollowSpeechRecognition.css";
+import "./HollowSpeechRecognition.css";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function HollowSpeechRecognition() {
@@ -18,9 +18,7 @@ export default function HollowSpeechRecognition() {
   const [spoken, setSpoken] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
-  const messagesObj = useSelector((state) => state.messageReducer);
-  const messagesArr = Object.values(messagesObj);
-  const [inputMsg, setInputMsg] = useState("");
+  const currentUser = useSelector((state) => state.session.user);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [diagnosticText, setDiagnosticText] = useState("");
@@ -31,46 +29,18 @@ export default function HollowSpeechRecognition() {
   // init SpeechSynth api
   const synth = window.speechSynthesis;
 
-  useEffect(() => {
-    const handleVoicesChanged = () => {
-      const availableVoices = synth.getVoices();
-      setVoices(availableVoices);
-      setSelectedVoice(availableVoices[0]);
-    };
-
-    synth.addEventListener("voiceschanged", handleVoicesChanged);
-
-    return () => {
-      synth.removeEventListener("voiceschanged", handleVoicesChanged);
-    };
-  }, [selectedVoice]);
+  const handleVoiceChange = (value) => {
+    voices.forEach((voice) => {
+      if (voice.name === value) {
+        setSelectedVoice(voice);
+      }
+    });
+  };
 
   useEffect(() => {
-    const voiceSelect = document.getElementById("voice-select");
-
-    let voices = [];
-
-    const getVoices = () => {
-      // populate voices array
-      voices = synth.getVoices();
-      // loop through voices array and create an option for each one
-      voices.forEach((voice) => {
-        // create option element to fill select
-        const option = document.createElement("option");
-        // fill option with voice and language
-        option.textContent = `${voice.name} / ${voice.lang}`;
-        // set needed options attributes
-        option.setAttribute("data-lang", voice.lang);
-        option.setAttribute("data-name", voice.name);
-        voiceSelect.appendChild(option);
-      });
-    };
-
-    getVoices();
-    if (synth.onvoiceschanged !== undefined) {
-      synth.onvoiceschanged = getVoices;
-    }
-  });
+    const availableVoices = synth.getVoices();
+    setVoices(availableVoices);
+  }, []);
 
   const hollowStart = async (e) => {
     e.preventDefault();
@@ -104,7 +74,6 @@ export default function HollowSpeechRecognition() {
 
     hollow.start();
     setSpoken("started listening");
-    console.log("started listening");
 
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
     // it has a getter enabling list/array access
@@ -138,11 +107,19 @@ export default function HollowSpeechRecognition() {
       ];
 
       const speak = (spoken) => {
-        if (synth.speaking) {
-          return;
+        // was preventing ai_response6
+        // if (synth.speaking) {
+        //   return;
+        // }
+
+        // speak text
+        if (!currentUser) {
+          const speakText = new SpeechSynthesisUtterance(spoken);
+          speakText.voice = selectedVoice;
+          hollow.abort();
         }
+
         if (spoken !== "") {
-          // speak text
           const speakText = new SpeechSynthesisUtterance(spoken);
 
           speakText.voice = selectedVoice;
@@ -167,12 +144,19 @@ export default function HollowSpeechRecognition() {
 
       const processResult = (spoken) => {
         setDiagnosticText("");
-        if (spoken.includes("stop listening")) {
+        if (!currentUser) {
+          speak(
+            "Greetings, weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
+          );
+        } else if (spoken === "Hello".toLowerCase()) {
+          speak(
+            "Greetings fellow wanderer! I am Hollow, your guide through this realm. I shall assist you in navigating its winding paths, crafting new notes, reminders, alarms, and unveiling the answers to your curious queries."
+          );
+        } else if (spoken.includes("stop listening")) {
           hollow.stop();
         } else if (spoken.includes("ignore")) {
           clearTimeout(timeout);
           spoken = "";
-          console.log(spoken);
         } else if (queries.some((query) => spoken.includes(query))) {
           let spokenAfter = spoken.split("Hollow")[1];
           speak(spokenAfter);
@@ -213,7 +197,6 @@ export default function HollowSpeechRecognition() {
       hollow.stop();
       setActive(false);
       setSpoken("");
-      console.log(active);
       return;
     };
 
@@ -234,25 +217,19 @@ export default function HollowSpeechRecognition() {
   }, [dispatch]);
 
   return (
-    <div className="flex-column-center">
+    <div className={`hollow-banner-${active}`}>
       <select
         id="voice-select"
-        onChange={(e) => setSelectedVoice(voices[e.target.value])}
+        onChange={(e) => handleVoiceChange(e.target.value)}
       >
         {voices.map((voice, index) => (
-          <option key={index} value={index}>
+          <option key={index} value={voice.name}>
             {voice.name} / {voice.lang}
           </option>
         ))}
       </select>
-
       <button onClick={hollowStart}> Hollow </button>
-      <p>{spoken && `You said ${spoken}`}</p>
-      <p>
-        {messagesArr ? messagesArr[messagesArr.length - 1]?.ai_response : ""}
-      </p>
       <p id="diagnostic">{diagnosticText}</p>
-      <p>Active: {active.toString()}</p>
     </div>
   );
 }
