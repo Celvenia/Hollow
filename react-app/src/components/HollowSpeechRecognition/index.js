@@ -74,13 +74,12 @@ export default function HollowSpeechRecognition() {
 
     hollow.start();
     setSpoken("started listening");
-
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
     // it has a getter enabling list/array access
     // SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual recognized words.
     // We then return its transcript property to get a string containing the individual recognized result as a string,
 
-    //   const result = event.results;
+    // const result = event.results;
     // Receiving and Handling Results
     hollow.onresult = (event) => {
       let timeout;
@@ -107,7 +106,7 @@ export default function HollowSpeechRecognition() {
       ];
 
       const speak = (spoken) => {
-        // was preventing ai_response6
+        // was preventing ai_response
         // if (synth.speaking) {
         //   return;
         // }
@@ -144,6 +143,7 @@ export default function HollowSpeechRecognition() {
 
       const processResult = (spoken) => {
         setDiagnosticText("");
+
         if (!currentUser) {
           speak(
             "Greetings, weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
@@ -152,7 +152,8 @@ export default function HollowSpeechRecognition() {
           speak(
             "Greetings fellow wanderer! I am Hollow, your guide through this realm. I shall assist you in navigating its winding paths, crafting new notes, reminders, alarms, and unveiling the answers to your curious queries."
           );
-        } else if (spoken.includes("stop listening")) {
+        } else if (spoken.includes("stop")) {
+          speak("farewell");
           hollow.stop();
         } else if (spoken.includes("ignore")) {
           clearTimeout(timeout);
@@ -169,8 +170,7 @@ export default function HollowSpeechRecognition() {
             if (page === "home") {
               page = "";
               speak(`navigating to home`);
-            }
-            if (page !== "home") {
+            } else if (page !== "home") {
               speak(`navigating to ${page}`);
             }
             history.push(`/${page}`);
@@ -180,9 +180,9 @@ export default function HollowSpeechRecognition() {
 
       for (let i = 0; i < event.results.length; i++) {
         let spoken = event.results[i][0].transcript;
+
         // clear previous timeout
         clearTimeout(timeout);
-
         timeout = setTimeout(() => {
           setSpoken(spoken);
           processResult(spoken);
@@ -202,11 +202,20 @@ export default function HollowSpeechRecognition() {
 
     hollow.onnomatch = (event) => {
       setDiagnosticText("I didn't recognize that.");
+      setActive(false);
+      return () => {
+        hollow.abort();
+      };
     };
 
     hollow.onerror = (event) => {
       setDiagnosticText(`Error occurred in recognition: ${event.error}`);
+      setActive(false);
+      return () => {
+        hollow.abort();
+      };
     };
+
     return () => {
       hollow.abort();
     };
@@ -218,18 +227,23 @@ export default function HollowSpeechRecognition() {
 
   return (
     <div className={`hollow-banner-${active}`}>
-      <select
-        id="voice-select"
-        onChange={(e) => handleVoiceChange(e.target.value)}
-      >
-        {voices.map((voice, index) => (
-          <option key={index} value={voice.name}>
-            {voice.name} / {voice.lang}
-          </option>
-        ))}
-      </select>
-      <button onClick={hollowStart}> Hollow </button>
-      <p id="diagnostic">{diagnosticText}</p>
+      <div className="flex-row">
+        <select
+          id="voice-select"
+          title="choose voice"
+          onChange={(e) => handleVoiceChange(e.target.value)}
+        >
+          {voices.map((voice, index) => (
+            <option key={index} value={voice.name}>
+              {voice.name} / {voice.lang}
+            </option>
+          ))}
+        </select>
+        <button title="start hollow" id="hollow-button" onClick={hollowStart}>
+          .
+        </button>
+        <p id="diagnostic">{diagnosticText}</p>
+      </div>
     </div>
   );
 }

@@ -41,7 +41,7 @@ def delete_note(id):
     db.session.delete(note)
     db.session.commit()
 
-    return {"note": note.to_dict()}
+    return {"deleted": note.to_dict()}
 
 # Update note by id
 @note_routes.route('/<int:id>', methods=['PUT'])

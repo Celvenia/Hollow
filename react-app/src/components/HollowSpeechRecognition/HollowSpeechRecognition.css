@@ -12,5 +12,29 @@
     background-size: cover;
     background-position: center;
     height: 10vh;
-    
+
+}
+
+#hollow-button {
+    position: relative;
+    background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 5px #fff;
+  }
+  
+
+#voice-select {
+    width: 20px;
+    margin: 10px;
+}
+
+#diagnostic {
+    color: #FFA500;
+    font-weight: bolder;
 }

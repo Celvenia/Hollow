@@ -30,7 +30,7 @@ function App() {
           <div className="grid-main">
             <div className="grid-main-item"><Message /></div>
             <div className="grid-main-item"></div> 
-            <div className="grid-main-item">Testing</div>
+            <div className="grid-main-item"></div>
             <div className="grid-main-item">
               {/* {isLoaded && 
       <Switch>
