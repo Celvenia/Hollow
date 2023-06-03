@@ -39,6 +39,15 @@ a {
   text-decoration: none;
 }
 
+button, input {
+  background-color: #565a75;
+  border-radius: 5px;
+  color: #fafbf6;
+  border: 1px solid #fafbf6;
+  padding: 2px;
+  cursor: pointer;
+}
+
 .active {
   font-weight: bold;
   color: #fafbf6;

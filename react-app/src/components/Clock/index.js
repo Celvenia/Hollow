@@ -1,31 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "./Clock.css";
 
-const TimeContext = React.createContext();
 
-export default function Clock() {
-  let time = new Date().toLocaleTimeString();
-  const [currentTime, setCurrentTime] = useState(time);
+const Clock = () => {
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  );
+  const [alarmTime, setAlarmTime] = useState("");
+  const [isAlarmSet, setIsAlarmSet] = useState(false);
+  const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
 
-  const updateTime = () => {
-    let time = new Date().toLocaleTimeString();
-    setCurrentTime(time);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [alarmTime]);
+
+  const handleRemoveAlarm = () => {
+    setAlarmTime("");
+    setIsAlarmSet(false);
+    setIsSnoozeEnabled(false);
   };
 
-  // every second update time
-  setInterval(updateTime, 1000);
+  const handleAlarmChange = (e) => {
+    setAlarmTime(e.target.value);
+  };
+
+  const setAlarm = () => {
+    if (alarmTime) {
+      console.log("Set alarm for", alarmTime);
+      setIsAlarmSet(true);
+    }
+  };
+
+  const handleSnooze = () => {
+    setIsSnoozeEnabled(true);
+    setTimeout(() => {
+      setIsSnoozeEnabled(false);
+    }, 5000);
+  };
 
   return (
-    <TimeContext.Provider value={currentTime}>
-      <div className="clock flex-column-center">
-        <h1>{currentTime}</h1>
-        <div className="clock-buttons">
-          <button>Set Alarm</button>
-          <button>Remove Alarm</button>
-          <button>Snooze</button>
-          <button>Message</button>
-        </div>
+    <div className="clock flex-column-center">
+      <h1>{currentTime}</h1>
+      <div className="clock-buttons">
+        <input
+          id="alarm-time"
+          type="time"
+          value={alarmTime}
+          onChange={handleAlarmChange}
+        />
+        {!isAlarmSet && <button onClick={setAlarm}>Set Alarm</button>}
+        {isAlarmSet && (
+          <button onClick={handleRemoveAlarm}>Remove Alarm</button>
+        )}
+        {isSnoozeEnabled ? (
+          <button className="snooze-false" disabled>
+            Snooze
+          </button>
+        ) : (
+          <button className="snooze-true" onClick={handleSnooze}>
+            Snooze
+          </button>
+        )}
+        <button>Message</button>
       </div>
-    </TimeContext.Provider>
+      {isAlarmSet && (
+        <p>
+          Alarm is set for: <strong>{alarmTime}</strong>
+        </p>
+      )}
+    </div>
   );
-}
+};
+
+export default Clock;

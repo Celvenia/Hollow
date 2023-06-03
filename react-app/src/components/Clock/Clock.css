@@ -16,12 +16,9 @@
   border: 2px solid #fafbf6;
   width: 250px;
   height: auto;
-  /* margin: 20px auto 20px auto; */
   border-radius: 15px;
-  padding-left: 50px;
-  padding-right: 0px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
+  display: block;
   background-color: #000;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   box-sizing: border-box;
@@ -37,7 +34,11 @@
   border-radius: 5px;
 }
 
-.clock-buttons > button {
+.clock-buttons > button, input {
   margin: 10px;
   width: 100%;
+}
+
+.snooze-false {
+    filter:brightness(50%)
 }

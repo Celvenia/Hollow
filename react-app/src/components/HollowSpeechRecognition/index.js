@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
@@ -8,6 +8,8 @@ import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 
 import "./HollowSpeechRecognition.css";
 import { getConversation } from "../../store/conversation";
+
+// import { globalAlarmTime, globalAlarmTimeRef } from "../Clock";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function HollowSpeechRecognition() {
@@ -109,6 +111,17 @@ export default function HollowSpeechRecognition() {
         "home",
       ];
 
+      const date = new Date();
+
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+
+      const alarmTime = document.getElementById('alarm-time')
+
       const speak = (spoken) => {
         // was preventing ai_response
         // if (synth.speaking) {
@@ -160,6 +173,19 @@ export default function HollowSpeechRecognition() {
         } else if (spoken.includes("ignore")) {
           clearTimeout(timeout);
           spoken = "";
+        } else if (spoken.includes("the current time")) {
+          speak(`the current time is ${new Date().toLocaleTimeString()}`);
+        } else if (spoken.includes("the current date")) {
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          });
+          speak(`the current date is ${formattedDate}`)
+        } else if (spoken.includes('when is my alarm')) {
+          // HH:mm
+          alarmTime.value = "05:06"
+          console.log(alarmTime.value)
         } else if (queries.some((query) => spoken.includes(query))) {
           let spokenAfter = spoken.split("Hollow")[1];
           speak(spokenAfter);
