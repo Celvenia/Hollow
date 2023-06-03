@@ -6,24 +6,20 @@ from datetime import datetime
 conversation_routes = Blueprint('conversations', __name__)
 
 
-@conversation_routes.route('')
+# Get conversation for the current user
+@conversation_routes.route('', methods=['GET'])
 @login_required
-def get_conversations():
+def get_conversation():
+    # Query for the conversation associated with the current user
+    conversation = Conversation.query.filter_by(user_id=current_user.id).first()
 
-    # Query for all conversations and returns them in a list of conversation dictionaries
+    if not conversation:
+        return jsonify(error="Conversation not found"), 404
 
-    conversations = Conversation.query.all()
-    return {'conversations': [conversation.to_dict() for conversation in conversations]}
+    # associated messages
+    messages = Message.query.filter_by(conversation_id=conversation.id).all()
 
-# Get conversation by id
-@conversation_routes.route('/<int:id>')
-@login_required
-def get_conversation(id):
-    # Query for a conversation by id and retrieve the associated messages
-    conversation = Conversation.query.get(id)
-    messages = Message.query.filter_by(conversation_id=id).all()
-
-    # Convert the conversation and messages to dictionaries
+    # Convert to dictionaries
     conversation_data = conversation.to_dict()
     messages_data = [message.to_dict() for message in messages]
 
@@ -31,6 +27,7 @@ def get_conversation(id):
     conversation_data['messages'] = messages_data
 
     return conversation_data
+
 
 # Update conversation by id
 @conversation_routes.route('/<int:id>', methods=['PUT'])
@@ -54,12 +51,16 @@ def update_conversation(id):
 
     return conversation.to_dict(), 200
 
-# Create conversation
 @conversation_routes.route('', methods=['POST'])
 def post_conversation():
     # Request information from json request and create new conversation
     if not current_user:
         return jsonify(error="You must be logged in to create a conversation"), 401
+
+    # Check if user already has a conversation
+    existing_conversation = Conversation.query.filter_by(user_id=current_user.id).first()
+    if existing_conversation:
+        return jsonify(error="You already have a conversation"), 400
 
     title = request.json.get('title')
     user_id = current_user.id   
@@ -75,10 +76,11 @@ def post_conversation():
     return new_conversation.to_dict(), 201
 
 
+
 # Delete conversation by id
 @conversation_routes.route('/<int:id>', methods=['DELETE'])
 def delete_conversation(id):
-    # Query for a conversation by id and delete that conversation
+    # Query for a conversation by id and delete the associated messages
     conversation = Conversation.query.get(id)
     
     if not conversation:
@@ -86,9 +88,10 @@ def delete_conversation(id):
 
     if conversation.user_id != current_user.id:
         return jsonify(error=["You don't have the permission to delete this conversation"]), 401
-    
 
-    db.session.delete(conversation)
+    # Delete all messages associated with the conversation
+    Message.query.filter_by(conversation_id=id).delete()
+
     db.session.commit()
 
     return {"deleted": conversation.to_dict()}

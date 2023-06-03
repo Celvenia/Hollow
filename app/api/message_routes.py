@@ -41,7 +41,7 @@ def gpt3():
         
         if not conversation:
             # If no conversation exists for the user, create a new one
-            conversation = Conversation(user_id=current_user.id, title="New Conversation")
+            conversation = Conversation(user_id=current_user.id, title="Journal")
             db.session.add(conversation)
             db.session.commit()
         

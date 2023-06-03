@@ -5,6 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
+
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -39,18 +40,19 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      {/* <button className="hidden"onClick={openMenu}> */}
+        {/* <i className="fas fa-user-circle" /> */}
+        <img  onClick={openMenu} className="user-profile-img" src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361333/Personal%20Assistant/image_1_ymijjp.png"></img>
+      {/* </button> */}
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="user-info">
             <li>{user.username}</li>
             <li>{user.email}</li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>
-          </>
+          </div>
         ) : (
           <>
             <OpenModalButton

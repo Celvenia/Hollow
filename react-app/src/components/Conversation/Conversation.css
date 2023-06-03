@@ -1,0 +1,58 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+/* #FFA500; orange */
+
+
+.conversation-title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .conversation-title-false {
+    color: #fafbf6;
+  }
+
+  .conversation-title-true {
+    color: #FFA500;
+  }
+  
+  .conversation-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .user-message {
+    background-color: #1a1a1a;
+    color: #fafbf6;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .ai-message {
+    background-color: #565a75;
+    color: #fafbf6;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .message-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #000;
+    padding: 20px;
+    border-bottom:1px solid #565a75;
+    border-radius: 10px;
+  }

@@ -42,8 +42,6 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-    
-    
 
     op.create_table(
         'conversations',
@@ -58,8 +56,15 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE conversations SET SCHEMA {SCHEMA};")
-    
-    
+
+    op.create_foreign_key(
+        'conversation_messages_fk_id',
+        'messages',
+        'conversations',
+        ['conversation_id'],
+        ['id'],
+        ondelete='CASCADE'
+    )
 
     op.create_table(
         'messages',
@@ -75,8 +80,6 @@ def upgrade():
     )
     if environment == "production":
         op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
-    
-    
 
     op.create_table(
         'notes',
@@ -93,7 +96,6 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE notes SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
-    
 
 
 def downgrade():

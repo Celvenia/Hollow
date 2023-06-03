@@ -1,5 +1,6 @@
 // constant variables for action creator
 const GET_MESSAGE = "message/GET_MESSAGE"
+const GET_MESSAGES = "message/GET_MESSAGES"
 const POST_MESSAGE = "message/POST_MESSAGE";
 
 // action creators - define actions (objects with type/data)
@@ -8,12 +9,35 @@ const getMessageAC = (message) => ({
   message
 })
 
+const getMessagesAC = (messages) => ({
+  type: GET_MESSAGES,
+  messages
+})
+
 const postMessageAC = (data) => ({
   type: POST_MESSAGE,
   data
 });
 
 // thunk action creators - for asynchronous code, i.e., fetch calls prior to dispatching action creators
+export const getMessages = () => async (dispatch) => {
+  const response = await fetch("/api/messages");
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getMessagesAC(data.messages));
+    return data;
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+
 export const postMessage = (message) => async (dispatch) => {
 
   const response = await fetch('/api/messages', {
@@ -43,13 +67,18 @@ const initialState = {};
 
 // reducer
 export default function messageReducer(state = initialState, action) {
+  const newState = { ...state };
   switch (action.type) {
     case GET_MESSAGE: {
-      const newState = { ...state };
+      return newState;
+    }
+    case GET_MESSAGES: {
+      action.messages.forEach(message => {
+        newState[message.id] = message
+      })
       return newState;
     }
     case POST_MESSAGE: {
-      const newState = { ...state};
 	  newState[action.data.id] = action.data
       return newState;
     }

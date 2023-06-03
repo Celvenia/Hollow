@@ -18,7 +18,7 @@ function Navigation({ isLoaded }){
 				<NavLink exact to="/messages">Messages</NavLink>
 			</li>
 			<li>
-				<NavLink exact to="/notes">Notes</NavLink>
+				<NavLink exact to="/notes/1">Notes</NavLink>
 			</li>
 			<li>
 				<NavLink exact to="/reminders">Reminders</NavLink>

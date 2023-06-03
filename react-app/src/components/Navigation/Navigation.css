@@ -1,5 +1,13 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+
 .profile-dropdown {
   position: absolute;
+  right: 1rem;
 }
 
 .hidden {
@@ -17,6 +25,17 @@
   height: 3vh;
 }
 
-.fas.fa-user-circle {
-  font-size: 1rem;
+
+.user-profile-img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.user-info {
+  color: #fafbf6;
+  background-color: #000;
+  border: 1px solid #fafbf6;
+  padding: 5px;
+  border-radius: 5px;
 }

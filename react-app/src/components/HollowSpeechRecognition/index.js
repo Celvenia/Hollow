@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 
 import "./HollowSpeechRecognition.css";
+import { getConversation } from "../../store/conversation";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function HollowSpeechRecognition() {
@@ -51,7 +52,7 @@ export default function HollowSpeechRecognition() {
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop", "Hollow"];
+    const keyWords = ["stop listening", "Hollow"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -96,6 +97,7 @@ export default function HollowSpeechRecognition() {
         "Hollow where are",
         "Hollow how are",
         "Hollow when are",
+        "Hollow create",
       ];
 
       const tabs = [
@@ -135,7 +137,7 @@ export default function HollowSpeechRecognition() {
           };
 
           // set rate and pitch
-          speakText.rate = 1;
+          speakText.rate = 1.2;
           speakText.pitch = 1;
 
           // speak
@@ -144,16 +146,15 @@ export default function HollowSpeechRecognition() {
       };
 
       const processResult = (spoken) => {
-
         if (!currentUser) {
           speak(
-            "Greetings, weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
+            "Greetings weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
           );
         } else if (spoken === "Hello".toLowerCase()) {
           speak(
-            "Greetings fellow wanderer! I am Hollow, your guide through this realm. I shall assist you in navigating its winding paths, crafting new notes, reminders, alarms, and unveiling the answers to your curious queries."
+            "Greetings fellow wanderer! I am Hollow, your guide through this realm. I shall assist you in navigating its paths, crafting notes, reminders, alarms, and unveiling the answers to your queries."
           );
-        } else if (spoken.includes("stop")) {
+        } else if (spoken.includes("stop listening")) {
           speak("farewell");
           hollow.stop();
         } else if (spoken.includes("ignore")) {
@@ -222,32 +223,39 @@ export default function HollowSpeechRecognition() {
     };
   };
 
-  useEffect(() => {
-    dispatch(getNotes());
-  }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   return (
     <div className={`hollow-banner-${active}`}>
       <div className="flex-column-center">
+        <button
+          disabled={active}
+          title="start hollow"
+          id={`hollow-button-${active}`}
+          onClick={hollowStart}
+        >
+          .
+        </button>
+        <select
+          id="voice-select"
+          title="choose voice"
+          onChange={(e) => handleVoiceChange(e.target.value)}
+        >
+          {voices.map((voice, index) => (
+            <option key={index} value={voice.name}>
+              {voice.name} / {voice.lang}
+            </option>
+          ))}
+        </select>
 
-          <select
-            id="voice-select"
-            title="choose voice"
-            onChange={(e) => handleVoiceChange(e.target.value)}
+        <div className="flex-row">
+          <p
+            id="diagnostic"
+            onClick={(e) => setDiagnosticText((e.target.value = ""))}
           >
-            {voices.map((voice, index) => (
-              <option key={index} value={voice.name}>
-                {voice.name} / {voice.lang}
-              </option>
-            ))}
-          </select>
-
-          <button disabled={active} title="start hollow" id={`hollow-button-${active}`} onClick={hollowStart}>
-            .
-          </button>
-          <div className="flex-row">
-        <p id="diagnostic" onClick={e => setDiagnosticText(e.target.value = "")}>{diagnosticText}</p>
-          </div>
+            {diagnosticText}
+          </p>
+        </div>
       </div>
     </div>
   );

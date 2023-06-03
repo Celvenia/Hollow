@@ -4,6 +4,8 @@
     background-color: #000;
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 .note-container {
   display: flex;
@@ -13,11 +15,12 @@
   background-image: url("https://res.cloudinary.com/dtzv3fsas/image/upload/v1685526300/Personal%20Assistant/hollow_knight_wayward_compass_sa4hjg.png");
   background-repeat: no-repeat;
   background-position: center;
+  width: 45vw;
 }
 
 .note-textarea {
-  width: 25%;
-  height: 25%;
+  width: 40vw;
+  height: 20vh;
   padding: 20px;
   font-size: 16px;
 }

@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import noteReducer from './note';
 import messageReducer from './message';
+import conversationReducer from './conversation';
 
 const rootReducer = combineReducers({
   session,
   noteReducer,
-  messageReducer
+  messageReducer,
+  conversationReducer
 
 });
 

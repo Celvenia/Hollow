@@ -147,19 +147,16 @@ export default function noteReducer(state = initialState, action) {
       return newState
     }
     case GET_NOTES: {
-      // const newState = { ...state };
       action.data.notes.forEach(note => {
         newState[note.id] = note
       })
       return newState;
     }
     case POST_NOTE: {
-      // const newState = { ...state };
       newState[action.data.id] = action.data
       return newState;
     }
     case UPDATE_NOTE: {
-      // const newState = { ...state }
       newState[action.data.id] = action.data
       return newState
     }

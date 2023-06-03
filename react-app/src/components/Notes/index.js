@@ -6,16 +6,6 @@ import { deleteNote, getNote, updateNote } from "../../store/note";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faFile } from "@fortawesome/free-solid-svg-icons";
 
-// Resize textarea based on window size
-function resizeTextarea() {
-  const textarea = document.getElementsByClassName("note-textarea")[0];
-  if (textarea) {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    textarea.style.width = `${width * 0.3}px`;
-    textarea.style.height = `${height * 0.25}px`;
-  }
-}
 
 export default function Notes() {
   const { id } = useParams();
@@ -45,16 +35,6 @@ export default function Notes() {
     dispatch(getNote(id));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    // Attach event listener for resize
-    window.addEventListener("resize", resizeTextarea);
-
-    // Initial resize when the page loads
-    resizeTextarea();
-    return () => {
-      window.removeEventListener("resize", resizeTextarea);
-    };
-  }, []);
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -85,7 +65,6 @@ export default function Notes() {
 
   return (
     <div className="note-page flex-column-center">
-      <h1 className="">Add to your journal</h1>
       <section className="note-container">
         {editMode ? (
           <input
