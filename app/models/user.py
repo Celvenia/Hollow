@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
 
     notes = relationship('Note', backref='user')
     conversations = relationship('Conversation', backref='user')
+    reminders = relationship('Reminder', backref='user')
 
     @property
     def password(self):

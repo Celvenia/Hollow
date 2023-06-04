@@ -94,4 +94,4 @@ def delete_conversation(id):
 
     db.session.commit()
 
-    return {"deleted": conversation.to_dict()}
+    return {"deleted messages from": conversation.to_dict()}

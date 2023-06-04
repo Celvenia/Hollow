@@ -2,15 +2,24 @@ from app.models import db, Reminder, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
 
+# strptime - string parse time methods
+# %Y: 4-digit year
+# %m: 2-digit month (with leading zeros)
+# %d: 2-digit day (with leading zeros)
+# %H: 2-digit hour (24-hour format)
+# %M: 2-digit minute
+# %S: 2-digit second
+
 # Adds a demo reminder, you can add other reminders here if you want
 def seed_reminders():
     reminder1 = Reminder(
-        date="2023-06-05",
-        time="09:00 AM",
+        date=datetime.strptime("2023-06-05", "%Y-%m-%d"), 
+        time="09:00 AM",  # HH:MM AM || PM
         title="Example",
         description="This is an example reminder",
         recurring=False,
         location="Example Location",
+        status="active", # active, inactive
         user_id=1
     )
     db.session.add(reminder1)

@@ -9,7 +9,8 @@ reminder_routes = Blueprint('reminders', __name__)
 @reminder_routes.route('', methods=['GET'])
 @login_required
 def get_reminders():
-    reminders = Reminder.query.all()
+    # reminders = Reminder.query.all()
+    reminders = Reminder.query.filter_by(user_id=current_user.id)
     return {'reminders': [reminder.to_dict() for reminder in reminders]}
 
 # Get reminder by id
@@ -27,12 +28,14 @@ def get_reminder(id):
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
-    date = request.json.get('date')
+    date_str = request.json.get('date')
+    date = datetime.strptime(date_str, '%Y-%m-%d').date()
     time = request.json.get('time')
     title = request.json.get('title')
     description = request.json.get('description')
     recurring = request.json.get('recurring')
     location = request.json.get('location')
+    status = request.json.get('status')
     user_id = current_user.id
 
     new_reminder = Reminder(
@@ -42,6 +45,7 @@ def create_reminder():
         description=description,
         recurring=recurring,
         location=location,
+        status=status,
         user_id=user_id
     )
 
@@ -62,19 +66,22 @@ def update_reminder(id):
     if reminder.user_id != current_user.id:
         return jsonify(error=["You don't have permission to update this reminder"]), 401
 
-    date = request.json.get('date')
+    date_str = request.json.get('date')
+    date = datetime.strptime(date_str, '%Y-%m-%d').date()
     time = request.json.get('time')
     title = request.json.get('title')
     description = request.json.get('description')
     recurring = request.json.get('recurring')
     location = request.json.get('location')
+    status = request.json.get('status')
 
-    reminder.date = date or reminder.date
-    reminder.time = time or reminder.time
+    reminder.date = date or reminder.date # Date
+    reminder.time = time or reminder.time # HH:MM AM || PM
     reminder.title = title or reminder.title
     reminder.description = description or reminder.description
-    reminder.recurring = recurring or reminder.recurring
+    reminder.recurring = recurring or reminder.recurring # True || False
     reminder.location = location or reminder.location
+    reminder.status = status or reminder.status # active, inactive
     reminder.updated_at = datetime.now()
 
     db.session.commit()
