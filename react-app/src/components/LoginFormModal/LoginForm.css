@@ -8,13 +8,14 @@
 .hollow-login {
   background-color: #1a1a1a;
   color: #fafbf6;
-  padding: 20px;
-  height: 40vh;
-  width: 40vw;
-  border: 2px solid #fafbf6;
-  border-radius: 20px;
+  height: 50vh;
+  width: 50vw;
 }
 
+.hollow-login form {
+    width: 100%;
+    height: 100%;
+}
 .hollow-login h1 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -22,7 +23,7 @@
 
 .hollow-login ul {
   list-style: none;
-  margin: 0;
+  margin: 20px;
   padding: 0;
   color: #ff0000;
 }
@@ -55,11 +56,19 @@
   background-color: #565a75;
   cursor: pointer;
   border-radius: 5px;
+  width: 30%;
+  font-weight: 700;
 }
 
 .hollow-login button:hover {
   background-color: #ffa500;
   color: #1a1a1a;
-  font: bolder;
+  font-weight: 700;
   border-radius: 5px;
+}
+
+.hollow-login .form-elements {
+    width: 90%;
+    height: auto;
+    margin-bottom: 1%;
 }

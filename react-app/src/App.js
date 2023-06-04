@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
@@ -15,6 +15,7 @@ import Clock, { TimeContext } from "./components/Clock";
 
 function App() {
   const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.session.user)
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
@@ -28,7 +29,10 @@ function App() {
           <Navigation isLoaded={isLoaded} />
           <h2>Welcome to Hollow</h2>
         </header>
-        {isLoaded && (
+        {!currentUser && (
+          <LandingPage />
+        )} 
+        {isLoaded && currentUser && (
           <main>
             <div className="grid-main">
               <div className="grid-main-item">

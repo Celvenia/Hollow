@@ -47,6 +47,10 @@ export default function HollowSpeechRecognition() {
     setVoices(availableVoices);
   }, []);
 
+  useEffect(() => {
+    getConversation()
+  }, [dispatch]);
+
   const hollowStart = async (e) => {
     e.preventDefault();
     // create new SpeechRecognition and SpeechGrammarList instances

@@ -37,8 +37,9 @@ export default function Conversation() {
             >
             {conversation.title}
             </div>
-            <div className={focus ? "hidden" : ""}>
+            <div className={focus ? "hidden" : "conversation-image"}>
                 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1685756758/Personal%20Assistant/artworks-z1oRUQbBvdc5PyKz-8Mz1xg-t500x500_l2kcmt.jpg"/>
+                
             </div>
         </div>
         <div className="conversation-container">

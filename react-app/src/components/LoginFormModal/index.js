@@ -21,34 +21,52 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    const data = await dispatch(login("demo@aa.io", "password"));
+    if (data) {
+      setErrors(data);
+    } else {
+      closeModal();
+    }
+  }
+
   return (
-    <div className="hollow-login flex-column-center">
+    <div className="hollow-login">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="flex-column-left" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
+        <div className="form-elements">
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div className="form-elements">
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div className="form-elements flex-column-center">
+          <button type="submit">Log In</button>
+        </div>
+        <div className="form-elements flex-column-center">
+          <button onClick={handleDemoLogin}>Demo Log In</button>
+        </div>
       </form>
     </div>
   );

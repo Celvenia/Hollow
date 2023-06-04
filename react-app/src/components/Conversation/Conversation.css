@@ -19,6 +19,10 @@
     color: #fafbf6;
   }
 
+  .conversation-title-false:hover {
+    filter: brightness(50%)
+  }
+
   .conversation-title-true {
     color: #FFA500;
   }
@@ -27,7 +31,11 @@
     display: flex;
     flex-direction: column;
   }
-  
+  .conversation-image > img {
+    height: 50%;
+    width: 100%;
+  }
+
   .hidden {
     display: none;
   }
