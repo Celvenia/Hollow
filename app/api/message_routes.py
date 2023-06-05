@@ -12,8 +12,14 @@ openai.api_key = os.getenv("OPEN_AI_KEY")
 def messages():
 
     # Query for all messages and returns them in a list of message dictionaries
+    conversation = Conversation.query.filter_by(user_id=current_user.id).first()
+    if not conversation:
+        # If no conversation exists for the user, create a new one
+        conversation = Conversation(user_id=current_user.id, title="New Conversation")
+        db.session.add(conversation)
+        db.session.commit()
 
-    messages = Message.query.all()
+    messages = Message.query.filter_by(conversation_id=conversation.id).all()
     return {'messages': [message.to_dict() for message in messages]}
 
 

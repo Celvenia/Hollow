@@ -21,6 +21,7 @@ export default function HollowSpeechRecognition() {
     window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
   const [spoken, setSpoken] = useState("");
+  const [unhandledSpoken, setUnhandledSpoken] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
@@ -48,7 +49,7 @@ export default function HollowSpeechRecognition() {
   }, []);
 
   useEffect(() => {
-    getConversation()
+    getConversation();
   }, [dispatch]);
 
   const hollowStart = async (e) => {
@@ -98,11 +99,13 @@ export default function HollowSpeechRecognition() {
         "Hollow where is",
         "Hollow how is",
         "Hollow when is",
+        "Hollow why is",
         "Hollow who are",
         "Hollow what are",
         "Hollow where are",
         "Hollow how are",
         "Hollow when are",
+        "Hollow why are",
         "Hollow create",
       ];
 
@@ -124,7 +127,7 @@ export default function HollowSpeechRecognition() {
       const minutes = date.getMinutes();
       const seconds = date.getSeconds();
 
-      const alarmTime = document.getElementById('alarm-time')
+      const alarmTime = document.getElementById("alarm-time");
 
       const speak = (spoken) => {
         // was preventing ai_response
@@ -163,6 +166,7 @@ export default function HollowSpeechRecognition() {
       };
 
       const processResult = (spoken) => {
+        setUnhandledSpoken(spoken);
         if (!currentUser) {
           speak(
             "Greetings weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
@@ -185,11 +189,11 @@ export default function HollowSpeechRecognition() {
             day: "numeric",
             year: "numeric",
           });
-          speak(`the current date is ${formattedDate}`)
-        } else if (spoken.includes('when is my alarm')) {
+          speak(`the current date is ${formattedDate}`);
+        } else if (spoken.includes("when is my alarm")) {
           // HH:mm
-          alarmTime.value = "05:06"
-          console.log(alarmTime.value)
+          alarmTime.value = "05:06";
+          console.log(alarmTime.value);
         } else if (queries.some((query) => spoken.includes(query))) {
           let spokenAfter = spoken.split("Hollow")[1];
           speak(spokenAfter);
@@ -229,6 +233,7 @@ export default function HollowSpeechRecognition() {
       hollow.stop();
       setActive(false);
       setSpoken("");
+      setUnhandledSpoken("");
       return;
     };
 
@@ -277,15 +282,17 @@ export default function HollowSpeechRecognition() {
             </option>
           ))}
         </select>
-
-        <div className="flex-row">
-          <p
-            id="diagnostic"
-            onClick={(e) => setDiagnosticText((e.target.value = ""))}
-          >
-            {diagnosticText}
-          </p>
-        </div>
+      </div>
+      <div className="unhandled-spoken">
+        <h4>{unhandledSpoken}</h4>
+      </div>
+      <div className="flex-row">
+        <p
+          id="diagnostic"
+          onClick={(e) => setDiagnosticText((e.target.value = ""))}
+        >
+          {diagnosticText}
+        </p>
       </div>
     </div>
   );

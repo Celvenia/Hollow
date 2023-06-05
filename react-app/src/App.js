@@ -20,7 +20,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
-    dispatch(getConversation())
   }, [dispatch]);
 
   return (
@@ -45,7 +44,8 @@ function App() {
                 {isLoaded && (
                   <Switch>
                     <Route exact path="/">
-                      <LandingPage />
+                      {/* Calendar for Reminders? */}
+                      <Notes />
                     </Route>
                     <Route exact path="/notes/:id">
                       <Notes />

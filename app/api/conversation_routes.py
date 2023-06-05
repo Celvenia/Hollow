@@ -14,9 +14,12 @@ def get_conversation():
     conversation = Conversation.query.filter_by(user_id=current_user.id).first()
 
     if not conversation:
-        return jsonify(error="Conversation not found"), 404
+        # If no conversation exists for the user, create a new one
+        conversation = Conversation(user_id=current_user.id, title="New Conversation")
+        db.session.add(conversation)
+        db.session.commit()
 
-    # associated messages
+    # Associated messages
     messages = Message.query.filter_by(conversation_id=conversation.id).all()
 
     # Convert to dictionaries
@@ -27,6 +30,7 @@ def get_conversation():
     conversation_data['messages'] = messages_data
 
     return conversation_data
+
 
 
 # Update conversation by id
@@ -77,25 +81,23 @@ def post_conversation():
 
 
 
-# Delete conversation by id
-@conversation_routes.route('/<int:id>', methods=['DELETE'])
-def delete_conversation(id):
-    # Query for a conversation by id and delete the associated messages
-    conversation = Conversation.query.get(id)
+# Delete conversation by user
+@conversation_routes.route('', methods=['DELETE'])
+def delete_conversation():
+    # Query for the conversation associated with the current user
+    conversation = Conversation.query.filter_by(user_id=current_user.id).first()
     
     if not conversation:
-       return jsonify(error=[f"Unable to find conversation associated with id {id}"])
-
-    if conversation.user_id != current_user.id:
-        return jsonify(error=["You don't have the permission to delete this conversation"]), 401
+        return jsonify(error="Conversation not found"), 404
 
     # Delete all messages associated with the conversation
-    Message.query.filter_by(conversation_id=id).delete()
+    Message.query.filter_by(conversation_id=conversation.id).delete()
 
     # Delete the conversation
-    db.session.delete(conversation)
+    # db.session.delete(conversation)
 
     db.session.commit()
 
-    return {"deleted conversation and messages": conversation.to_dict()}
+    return {"deleted messages from": conversation.to_dict()}
+
 

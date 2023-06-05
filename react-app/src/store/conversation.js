@@ -1,6 +1,6 @@
 // constant variables for action creator
 const GET_CONVERSATION = "CONVERSATION/GET_CONVERSATION";
-const UPDATE_CONVERSATION = "CONVERSATIONs/UPDATE_CONVERSATION";
+const UPDATE_CONVERSATION = "CONVERSATION/UPDATE_CONVERSATION";
 const POST_CONVERSATION = "CONVERSATION/POST_CONVERSATION";
 const DELETE_CONVERSATION = "CONVERSATION/DELETE_CONVERSATION";
 
@@ -42,7 +42,6 @@ export const getConversation = () => async (dispatch) => {
     return ["An error occurred. Please try again."];
   }
 };
-
 
 export const postConversation = (conversation) => async (dispatch) => {
   const response = await fetch("/api/conversations", {
@@ -91,15 +90,14 @@ export const updateConversation = (conversation) => async (dispatch) => {
   }
 };
 
-export const deleteConversation = (id) => async (dispatch) => {
-  const response = await fetch(`/api/conversations/${id}`, {
+export const deleteConversation = () => async (dispatch) => {
+  const response = await fetch(`/api/conversations`, {
     method: "DELETE",
   });
 
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteConversationAC(data));
-
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -119,21 +117,20 @@ export default function conversationReducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
     case GET_CONVERSATION: {
-      return {...newState, ...action.data}
+      return { ...newState, ...action.data };
     }
     case POST_CONVERSATION: {
       newState[action.data.id] = action.data;
       return newState;
     }
     case UPDATE_CONVERSATION: {
-      newState[action.data.id] = action.data;
+      newState.title = action.data.title;
       return newState;
     }
     case DELETE_CONVERSATION: {
-        // deleting just messages associated with conversation
-        const newState = { ...state };
-        delete newState[action.data.id]
-        return newState;
+      const newState = { ...state };
+      delete newState[action.data["deleted"].id];
+      return newState;
     }
     default:
       return state;
