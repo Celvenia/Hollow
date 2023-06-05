@@ -68,7 +68,7 @@ export const postConversation = (conversation) => async (dispatch) => {
 };
 
 export const updateConversation = (conversation) => async (dispatch) => {
-  const response = await fetch(`/api/Conversations/${conversation.id}`, {
+  const response = await fetch(`/api/conversations/${conversation.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export const updateConversation = (conversation) => async (dispatch) => {
 };
 
 export const deleteConversation = (id) => async (dispatch) => {
-  const response = await fetch(`/api/Conversations/${id}`, {
+  const response = await fetch(`/api/conversations/${id}`, {
     method: "DELETE",
   });
 
@@ -131,7 +131,8 @@ export default function conversationReducer(state = initialState, action) {
     }
     case DELETE_CONVERSATION: {
         // deleting just messages associated with conversation
-        newState[action.data.id] = action.data;
+        const newState = { ...state };
+        delete newState[action.data.id]
         return newState;
     }
     default:

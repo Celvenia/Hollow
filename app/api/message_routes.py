@@ -71,3 +71,4 @@ def gpt3():
         error_message = str(e)  # Get the error message as a string
         return {'error': error_message}, 500
 
+

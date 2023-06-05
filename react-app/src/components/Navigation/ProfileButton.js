@@ -54,7 +54,7 @@ function ProfileButton({ user }) {
             </li>
           </div>
         ) : (
-          <>
+          <div className="flex-row">
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
@@ -66,7 +66,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-          </>
+          </div>
         )}
       </ul>
     </>

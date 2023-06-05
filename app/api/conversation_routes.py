@@ -92,6 +92,10 @@ def delete_conversation(id):
     # Delete all messages associated with the conversation
     Message.query.filter_by(conversation_id=id).delete()
 
+    # Delete the conversation
+    db.session.delete(conversation)
+
     db.session.commit()
 
-    return {"deleted messages from": conversation.to_dict()}
+    return {"deleted conversation and messages": conversation.to_dict()}
+

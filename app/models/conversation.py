@@ -18,8 +18,8 @@ class Conversation(db.Model, UserMixin):
     updated_at = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now)
     
-    # messages = relationship('Message', backref='conversation', cascade='all, delete-orphan')
-    messages = relationship('Message', backref='conversation')
+    messages = relationship('Message', backref='conversation', cascade='all, delete-orphan')
+    # messages = relationship('Message', backref='conversation')
  
 
 

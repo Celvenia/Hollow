@@ -67,7 +67,7 @@ def upgrade():
         sa.Column('created_at', sa.DateTime(), default=datetime.now),
         sa.Column('updated_at', sa.DateTime(),
                   default=datetime.now, onupdate=datetime.now),
-        sa.ForeignKeyConstraint(['conversation_id'], ['conversations.id']),
+        sa.ForeignKeyConstraint(['conversation_id'], ['conversations.id'], ondelete='CASCADE'),
         sa.PrimaryKeyConstraint('id')
     )
     if environment == "production":

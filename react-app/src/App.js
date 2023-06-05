@@ -12,6 +12,7 @@ import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
 import Testing from "./components/Testing";
 import Conversation from "./components/Conversation";
 import Clock, { TimeContext } from "./components/Clock";
+import { getConversation } from "./store/conversation";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(getConversation())
   }, [dispatch]);
 
   return (
