@@ -35,6 +35,8 @@ export default function HollowSpeechRecognition() {
   // init SpeechSynth api
   const synth = window.speechSynthesis;
 
+
+
   const handleVoiceChange = (value) => {
     voices.forEach((voice) => {
       if (voice.name === value) {

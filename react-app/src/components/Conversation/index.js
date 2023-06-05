@@ -115,7 +115,7 @@ export default function Conversation() {
             className={`conversation-title-${focus}`}
             title="conversation title"
           >
-            {title}
+            <h3>{title}</h3>
           </span>
           <FontAwesomeIcon
             icon={faPen}
@@ -148,6 +148,7 @@ export default function Conversation() {
             <textarea
               id="message-textarea"
               onChange={handleMessageToPost}
+              placeholder="Create a query here, then hit send..."
             ></textarea>
           </div>
         )}

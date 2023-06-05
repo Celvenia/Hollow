@@ -6,10 +6,10 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
-import Notes from "./components/Notes";
+import Note from "./components/Note";
 import Message from "./components/Message";
 import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
-import Testing from "./components/Testing";
+import Notes from "./components/Notes";
 import Conversation from "./components/Conversation";
 import Clock, { TimeContext } from "./components/Clock";
 import { getConversation } from "./store/conversation";
@@ -47,24 +47,18 @@ function App() {
                       {/* Calendar for Reminders? */}
                       <Notes />
                     </Route>
-                    <Route exact path="/notes/:id">
-                      <Notes />
-                    </Route>
                     <Route path="/login">
                       <LoginFormPage />
                     </Route>
                     <Route path="/signup">
                       <SignupFormPage />
                     </Route>
-                    <Route exact path="/testing">
-                      <Testing />
-                    </Route>
                   </Switch>
                 )}
               </div>
-              <div className="grid-main-item"></div>
+              <div className="grid-main-item"> <Clock /></div>
               <div className="grid-main-item">
-                <Clock />
+               
               </div>
             </div>
           </main>

@@ -161,7 +161,7 @@ export default function noteReducer(state = initialState, action) {
       return newState
     }
     case DELETE_NOTE: {
-      delete newState[action.data.note.id]
+      delete newState[action.data.deleted.id]
       return newState
     }
     default:
