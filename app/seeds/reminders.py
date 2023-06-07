@@ -19,7 +19,7 @@ def seed_reminders():
         description="This is an example reminder",
         recurring=False,
         location="Example Location",
-        status="active", # active, inactive
+        status="active", # active, completed, cancelled
         user_id=1
     )
     db.session.add(reminder1)

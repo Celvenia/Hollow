@@ -4,13 +4,14 @@ import session from './session'
 import noteReducer from './note';
 import messageReducer from './message';
 import conversationReducer from './conversation';
+import reminderReducer from './reminder';
 
 const rootReducer = combineReducers({
   session,
   noteReducer,
   messageReducer,
-  conversationReducer
-
+  conversationReducer,
+  reminderReducer
 });
 
 

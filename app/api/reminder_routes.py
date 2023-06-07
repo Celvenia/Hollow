@@ -6,14 +6,17 @@ from datetime import datetime
 reminder_routes = Blueprint('reminders', __name__)
 
 # Get all reminders
+
+
 @reminder_routes.route('', methods=['GET'])
 @login_required
 def get_reminders():
-    # reminders = Reminder.query.all()
     reminders = Reminder.query.filter_by(user_id=current_user.id)
     return {'reminders': [reminder.to_dict() for reminder in reminders]}
 
 # Get reminder by id
+
+
 @reminder_routes.route('/<int:id>', methods=['GET'])
 @login_required
 def get_reminder(id):
@@ -25,6 +28,8 @@ def get_reminder(id):
     return reminder.to_dict()
 
 # Create reminder
+
+
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
@@ -55,6 +60,8 @@ def create_reminder():
     return new_reminder.to_dict(), 201
 
 # Update reminder by id
+
+
 @reminder_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_reminder(id):
@@ -75,13 +82,13 @@ def update_reminder(id):
     location = request.json.get('location')
     status = request.json.get('status')
 
-    reminder.date = date or reminder.date # Date
-    reminder.time = time or reminder.time # HH:MM AM || PM
+    reminder.date = date or reminder.date  # Date
+    reminder.time = time or reminder.time  # HH:MM AM || PM
     reminder.title = title or reminder.title
     reminder.description = description or reminder.description
-    reminder.recurring = recurring or reminder.recurring # True || False
+    reminder.recurring = recurring or reminder.recurring  # True || False
     reminder.location = location or reminder.location
-    reminder.status = status or reminder.status # active, inactive
+    reminder.status = status or reminder.status  # active, completed, cancelled
     reminder.updated_at = datetime.now()
 
     db.session.commit()
@@ -89,6 +96,8 @@ def update_reminder(id):
     return reminder.to_dict(), 200
 
 # Delete reminder by id
+
+
 @reminder_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_reminder(id):
@@ -104,4 +113,3 @@ def delete_reminder(id):
     db.session.commit()
 
     return {"deleted": reminder.to_dict()}
-

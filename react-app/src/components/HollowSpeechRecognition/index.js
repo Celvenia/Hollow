@@ -2,14 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
-import { getNotes } from "../../store/note";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLanguage } from "@fortawesome/free-solid-svg-icons";
 
 import "./HollowSpeechRecognition.css";
 import { getConversation } from "../../store/conversation";
-
-// import { globalAlarmTime, globalAlarmTimeRef } from "../Clock";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function HollowSpeechRecognition() {
@@ -105,9 +100,10 @@ export default function HollowSpeechRecognition() {
         "Hollow who are",
         "Hollow what are",
         "Hollow where are",
-        "Hollow how are",
         "Hollow when are",
         "Hollow why are",
+        "Hollow how are",
+        "Hollow how can",
         "Hollow create",
       ];
 

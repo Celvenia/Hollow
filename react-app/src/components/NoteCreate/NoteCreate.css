@@ -1,0 +1,28 @@
+.note-create-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 47vw;
+  height: 100%;
+  background-color: #000;
+  border-radius: 5px;
+}
+
+.note-create-form-element {
+
+}
+
+.note-create-textarea {
+    min-width: 45vw;
+    min-height: 14vh;
+    max-width: 45vw;
+    border-radius: 5px;
+}
+
+.note-create-input {
+    max-width: 44vw;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+}

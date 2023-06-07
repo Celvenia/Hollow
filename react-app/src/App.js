@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import { authenticate } from "./store/session";
+
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
-import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
-import Note from "./components/Note";
-import Message from "./components/Message";
 import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
 import Notes from "./components/Notes";
 import Conversation from "./components/Conversation";
-import Clock, { TimeContext } from "./components/Clock";
-import { getConversation } from "./store/conversation";
+import Clock from "./components/Clock";
+import Calendar from "./components/Calendar";
 
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.session.user)
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -28,7 +28,6 @@ function App() {
         <header>
           <HollowSpeechRecognition />
           <Navigation isLoaded={isLoaded} />
-          <h2>Welcome to Hollow</h2>
         </header>
         {!currentUser && (
           <LandingPage />
@@ -53,12 +52,15 @@ function App() {
                     <Route path="/signup">
                       <SignupFormPage />
                     </Route>
+                    <Route path="/notes">
+                      <Notes />
+                    </Route>
                   </Switch>
                 )}
               </div>
               <div className="grid-main-item"> <Clock /></div>
               <div className="grid-main-item">
-               
+               <Calendar />
               </div>
             </div>
           </main>

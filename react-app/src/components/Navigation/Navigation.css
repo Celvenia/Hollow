@@ -9,6 +9,7 @@
   position: absolute;
   right: 1rem;
   z-index: 10;
+  margin-top: 0.5%;
 }
 
 .hidden {
@@ -24,6 +25,8 @@
   padding-left: 50px;
   padding-right: 50px;
   height: 3vh;
+  z-index: 10;
+  margin-bottom: 1%;
 }
 
 

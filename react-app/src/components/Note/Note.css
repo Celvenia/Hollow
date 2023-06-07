@@ -2,10 +2,8 @@
 .note-page {
     color: #fff;
     background-color: #000;
-    width: 100%;
-    height: 100%;
-    margin-left: 2%;
-    padding: 0;
+    width: 46vw;
+    height: 100vh;
     border-radius: 5px;
 }
 
@@ -15,19 +13,26 @@
   justify-content: center;
   align-items: center;
   background-color: #000;
-  width: 45vw;
+  width: 47vw;
 }
 
-.note-textarea {
-  width: 40vw;
-  min-width: 40vw;
-  height: 20vh;
+.note-textarea{
+  width: 42vw;
+  max-width: 42vw;
+  min-height: 18vh;
+  height: 18vh;
   padding: 20px;
   font-size: 16px;
-  resize: none;
 }
 
 .svg-inline--fa.fa-pen {
     justify-self: center;
     align-self: center;
+}
+
+.note-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
 }

@@ -1,0 +1,102 @@
+  
+  /* Hollow Knight palette */
+  /* #0f0f1b black */
+  /* #1a1a1a black (darker) */
+  /* #565a75 grey */
+  /* #fafbf6 white */
+  /* #fff white (generic) */
+  /* #FFA500; orange */
+
+.calendar-page {
+    max-width: 46vw;
+    margin: 0;
+    padding: 1%;
+    background-color: #000;
+    border-radius: 5px;
+  }
+  
+  .calendar-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1%;
+    background-color: #565a75;
+  }
+
+  .reminder-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    margin-bottom: 5px;
+    font-size: 80%;
+  }
+  
+  .form-input {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #0f0f1b;
+  }
+  
+  .calendar-day {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .other-month {
+    color: #fafbf6;
+  }
+  
+  .day-number {
+    font-weight: bold;
+  }
+  
+  .reminders-heading {
+    font-size: 20px;
+    margin-bottom: 1%;
+    background-color: #0f0f1b;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .no-reminders {
+    font-style: italic;
+    color: #bbb;
+  }
+  
+  .reminders-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .reminder-item {
+    margin-bottom: 1%;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+  }
+
+  .month-heading {
+    font-size: 20px;
+    background-color: #0f0f1b;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }

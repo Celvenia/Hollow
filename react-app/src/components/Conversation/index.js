@@ -10,7 +10,8 @@ import { getMessages, deleteMessages, postMessage } from "../../store/message";
 import "./Conversation.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faFile, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Conversation() {
   const conversation = useSelector((state) => state.conversationReducer);
@@ -19,7 +20,7 @@ export default function Conversation() {
 
   const dispatch = useDispatch();
   const [display, setDisplay] = useState(false);
-  const [focus, setFocus] = useState(false);
+  const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [editMode, setEditMode] = useState(false);
@@ -44,13 +45,28 @@ export default function Conversation() {
     }
   };
 
+  const handleUpdateClick = () => {
+    conversation.title = newTitle;
+    const updatedConversation = { ...conversation, title: newTitle };
+    dispatch(updateConversation(updatedConversation));
+  };
+
+  const handleTitleBlur = () => {
+    if (title !== newTitle) {
+      setTitle(newTitle);
+      handleUpdateClick();
+    }
+    setEditMode(false);
+  };
+
   const handleConversationShowClick = () => {
-    setFocus(!focus);
+    setShow(!show);
     setDisplay(!display);
   };
 
   const handleDeleteMessagesClick = () => {
     dispatch(deleteMessages());
+    dispatch(getConversation())
   };
 
   const handleSendQueryClick = () => {
@@ -87,35 +103,40 @@ export default function Conversation() {
       setTitle(conversation.title);
     }
   }, [conversation]);
-
   return (
-    <div>
+    <div className="conversation-container">
       <div
         ref={topOfConversation}
         className="length-100 conversation-button-container"
       >
         <button onClick={handleScrollToBottom}>⇩</button>
-        <button onClick={handleDeleteMessagesClick}>Delete Messages</button>
-        <button onClick={handleTitleSave}>Save</button>
+        {show ? (
+          <>
+            <button onClick={handleConversationShowClick}><FontAwesomeIcon icon={faEyeSlash} /></button>
+            <button onClick={handleDeleteMessagesClick}>Delete Messages</button>
+          </>
+        ) : (
+          <button onClick={handleConversationShowClick}><FontAwesomeIcon icon={faEye} /></button>
+        )}
         {!display && <button onClick={handleSendQueryClick}>Send Query</button>}
       </div>
       {editMode ? (
         <div className="title-active-edit">
           <input
             type="text"
-            maxlength="40"
+            maxLength="40"
             value={newTitle}
+            onBlur={handleTitleBlur}
             onChange={handleTitleChange}
+            autoFocus
           />
         </div>
       ) : (
         <div className="title-inactive-edit">
           <span
-            onClick={handleConversationShowClick}
-            className={`conversation-title-${focus}`}
             title="conversation title"
           >
-            <h3>{title}</h3>
+            <h4>{title}</h4>
           </span>
           <FontAwesomeIcon
             icon={faPen}
@@ -130,33 +151,40 @@ export default function Conversation() {
           <div>
             {messages &&
               messages.map((message) => (
-                <div>
-                  {
-                    <div key={message.id} className="message-container">
-                      <div className="user-message">{message.message}</div>
-                      <div className="ai-message">{message.ai_response}</div>
-                    </div>
-                  }
+                // <div>
+                //   {
+                <div key={message.id} className="message-container">
+                  <div className="user-message">{message.message}</div>
+                  <div className="ai-message">{message.ai_response}</div>
                 </div>
+                //   }
+                // </div>
               ))}
           </div>
         )}
 
         {!display && (
-          <div>
-            <h3 className="flex-column-center"> Hollow </h3>
+          <div className="message-textarea-container">
+            {/* <h4 className="flex-column-center"> Hollow </h4> */}
             <textarea
               id="message-textarea"
               onChange={handleMessageToPost}
-              placeholder="Create a query here, then hit send..."
+              placeholder="Write a question here, then send query..."
             ></textarea>
+            <div className="scroll-top-button">
+              <button onClick={handleScrollToTop} ref={bottomOfConversation}>
+                ⇧
+              </button>
+            </div>
           </div>
         )}
-      </div>
-      <div className="scroll-top-button">
-        <button onClick={handleScrollToTop} ref={bottomOfConversation}>
-          ⇧
-        </button>
+        {display && (
+          <div className="scroll-top-button">
+            <button onClick={handleScrollToTop} ref={bottomOfConversation}>
+              ⇧
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

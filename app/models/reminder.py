@@ -17,7 +17,7 @@ class Reminder(db.Model, UserMixin):
     description = db.Column(db.Text)
     recurring = db.Column(db.Boolean, default=False)
     location = db.Column(db.String(100))
-    status = db.Column(db.String(10), default='active') # active, inactive
+    status = db.Column(db.String(10), default='active') # active, completed, cancelled
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
