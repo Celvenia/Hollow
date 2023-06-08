@@ -14,7 +14,6 @@
 .conversation-container {
   display: flex;
   flex-direction: column;
-  width: 47.5vw;
   min-height: 20vh;
   background-color: #000;
   border-radius: 5px;
@@ -32,7 +31,6 @@
 .user-message {
   background-color: #1a1a1a;
   color: #fafbf6;
-  margin-right: 10px;
   padding: 5px;
   border-radius: 5px;
 }
@@ -40,7 +38,6 @@
 .ai-message {
   background-color: #565a75;
   color: #fafbf6;
-  margin-right: 10px;
   padding: 5px;
   border-radius: 5px;
 }
@@ -52,6 +49,8 @@
   padding: 20px;
   border-bottom: 1px solid #565a75;
   border-radius: 10px;
+  max-width: 47vw;
+  min-width: 47vw;
 }
 
 .edit-icon {
@@ -63,11 +62,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 46vw;
+  align-items: center;
   height: auto;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  margin-left: 1%;
+  width: 100%;
+  margin-top:1%;
+  margin-bottom:1%;
   background-color: #0f0f1b;
 }
 
@@ -75,7 +74,6 @@
   display: flex;
   justify-content: flex-start;
   background-color: #000;
-  max-width: 45vw;
   padding: 1%;
   border-radius: 5px;
 }
@@ -86,19 +84,18 @@
 
 .message-textarea-container {
     min-height: 24vh;
+    margin-left: 1%;
 }
 
 #message-textarea {
-    margin-left: 1%;
-    margin-right: 1%;
-    width: 46vw;
-    max-width: 46vw;
-    min-height: 22vh;
+    min-height: 21vh;
+    max-width: 47vw;
+    min-width: 47vw;
 }
+
 
 .scroll-top-button {
     position: sticky;
     background-color: #000;
-    max-width: 47vw;
     border-radius: 5px;
   }

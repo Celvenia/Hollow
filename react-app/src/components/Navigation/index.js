@@ -1,41 +1,89 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import './Navigation.css';
+import React, { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton";
+import "./Navigation.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
+function Navigation({ isLoaded }) {
+  const sessionUser = useSelector((state) => state.session.user);
+  const [show, setShow] = useState(false);
+  const dropdownRef = useRef(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+	// if DOM element rendered && event.target(click) is not contained in DOM element setShow(false)
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+		setShow(false)
+      }
+    };
 
-function Navigation({ isLoaded }){
-	const sessionUser = useSelector(state => state.session.user);
+    document.addEventListener("click", handleClickOutside);
 
-	return (
-		<ul className='flex-row nav-container'>
-			<li>
-				<NavLink exact to="/">Home</NavLink>
-			</li>
-			<li>
-				<NavLink exact to="/messages">Messages</NavLink>
-			</li>
-			<li>
-				<NavLink exact to="/notes">Notes</NavLink>
-			</li>
-			<li>
-				<NavLink exact to="/reminders">Reminders</NavLink>
-			</li>
-			<li>
-				<NavLink exact to="/alarms">Alarms</NavLink>
-			</li>
-			<li>
-				<NavLink exact to="/testing">Testing</NavLink>
-			</li>
-			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
-			)}
-		</ul>
-	);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleIconClick = (e) => {
+	// click event was propagating to document, preventing dropdown from opening
+    e.stopPropagation();
+    setShow(!show);
+  };
+
+  return (
+    <ul className="nav-container">
+      <FontAwesomeIcon
+        icon={faBars}
+        className="nav-icon"
+        onClick={handleIconClick}
+      />
+
+      {show ? (
+        <ul className="nav-links" ref={dropdownRef}>
+          <div>
+            <NavLink exact to="/">
+              Home
+            </NavLink>
+          </div>
+          {/* <div>
+            <NavLink exact to="/messages">
+              Messages
+            </NavLink>
+          </div> */}
+          <div>
+            <NavLink exact to="/notes">
+              Notes
+            </NavLink>
+          </div>
+          <div>
+            <NavLink exact to="/reminders">
+              Reminders
+            </NavLink>
+          </div>
+          <div>
+            <NavLink exact to="/alarms">
+              Alarms
+            </NavLink>
+          </div>
+          {/* <div>
+            <NavLink exact to="/testing">
+              Testing
+            </NavLink>
+          </div> */}
+        </ul>
+      ) : (
+        ""
+      )}
+      <div id="nav-display-text"></div>
+      {isLoaded && (
+        <div>
+          <ProfileButton user={sessionUser} />
+        </div>
+      )}
+    </ul>
+  );
 }
 
 export default Navigation;

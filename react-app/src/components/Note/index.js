@@ -70,7 +70,7 @@ export default function Note({ note }) {
             autoFocus
           />
         ) : (
-          <div className="flex-row">
+          <div className="note-title">
             <h4>{title}</h4>
             <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
           </div>

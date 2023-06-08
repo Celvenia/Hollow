@@ -16,7 +16,6 @@ export default function HollowSpeechRecognition() {
     window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
   const [spoken, setSpoken] = useState("");
-  const [unhandledSpoken, setUnhandledSpoken] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
@@ -29,8 +28,6 @@ export default function HollowSpeechRecognition() {
 
   // init SpeechSynth api
   const synth = window.speechSynthesis;
-
-
 
   const handleVoiceChange = (value) => {
     voices.forEach((voice) => {
@@ -126,6 +123,7 @@ export default function HollowSpeechRecognition() {
       const seconds = date.getSeconds();
 
       const alarmTime = document.getElementById("alarm-time");
+      let speaking = document.getElementById("nav-display-text");
 
       const speak = (spoken) => {
         // was preventing ai_response
@@ -164,7 +162,11 @@ export default function HollowSpeechRecognition() {
       };
 
       const processResult = (spoken) => {
-        setUnhandledSpoken(spoken);
+        speaking.innerText = spoken;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          speaking.innerText = ""
+        }, 15000);
         if (!currentUser) {
           speak(
             "Greetings weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
@@ -231,7 +233,8 @@ export default function HollowSpeechRecognition() {
       hollow.stop();
       setActive(false);
       setSpoken("");
-      setUnhandledSpoken("");
+      let speaking = document.getElementById("nav-display-text");
+      speaking.innerText = ""
       return;
     };
 
@@ -280,9 +283,6 @@ export default function HollowSpeechRecognition() {
             </option>
           ))}
         </select>
-      </div>
-      <div className="unhandled-spoken">
-        <h4>{unhandledSpoken}</h4>
       </div>
       <div className="flex-row">
         <p

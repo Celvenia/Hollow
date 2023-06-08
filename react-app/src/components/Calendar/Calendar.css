@@ -8,47 +8,43 @@
   /* #FFA500; orange */
 
 .calendar-page {
-    max-width: 46vw;
-    margin: 0;
-    padding: 1%;
     background-color: #000;
     border-radius: 5px;
+    min-height: 37.5vh;
+    height: auto;
   }
   
   .calendar-navigation {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 1%;
+    justify-content: space-evenly;
     background-color: #565a75;
-  }
-
-  .reminder-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  
-  .form-label {
-    margin-bottom: 5px;
-    font-size: 80%;
-  }
-  
-  .form-input {
-    padding: 5px;
-    margin-bottom: 10px;
+    margin: 0;
   }
 
   .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    background-color: #000;
+  }
+
+  .calendar-day > button {
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    padding: 1%;
+    background-color: #000;
+    font-size: 100%;
+  }
+
+  .calendar-day > button:hover {
+    color: #FFA500;
   }
   
   .calendar-header {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 1%;
     font-weight: bold;
     text-align: center;
     background-color: #0f0f1b;
@@ -65,38 +61,28 @@
   
   .day-number {
     font-weight: bold;
+    cursor: pointer;
   }
   
-  .reminders-heading {
-    font-size: 20px;
-    margin-bottom: 1%;
-    background-color: #0f0f1b;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .no-reminders {
-    font-style: italic;
-    color: #bbb;
-  }
-  
-  .reminders-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .reminder-item {
-    margin-bottom: 1%;
-    display: flex;
-    flex-direction: column;
-    background-color: #1a1a1a;
+  .day-number:hover {
+    filter:brightness(50%)
   }
 
+
   .month-heading {
-    font-size: 20px;
-    background-color: #0f0f1b;
+    font-size: 100%;
     display: flex;
     justify-content: center;
+    font-weight: 700;
     margin: 0;
+    padding: 0;
+  }
+
+  .calendar-arrow {
+    cursor: pointer;
+    font-size: 125%;
+  }
+
+  .calendar-arrow:hover {
+    color: #000;
   }

@@ -1,0 +1,23 @@
+
+.reminder-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2%;
+}
+
+.form-label {
+  margin-bottom: 5px;
+  font-size: 80%;
+  color: #fff;
+}
+
+.form-input {
+  padding: 5px;
+}
+
+#description {
+    min-width: 40vw;
+    min-height: 20vh;
+    max-width: 45vw;
+    max-height: 30vh;
+}

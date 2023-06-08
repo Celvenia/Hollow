@@ -14,7 +14,7 @@ export default function Notes() {
   const [displayCreate, setDisplayCreate] = useState(true);
   const notesArr = Object.values(notesObj);
   const notes = notesArr.filter((note) => note.user_id === currentUser.id);
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
 
   const handleNoteSelect = (note) => {
     setSelectedNote(note);
@@ -41,17 +41,18 @@ export default function Notes() {
 
   return (
     <>
-      <div className="note-dropdown-container" ref={dropdownRef}>
+      <div className="note-dropdown-container">
         <button title="create new note" onClick={(e) => setSelectedNote(null)}>
           Create Note Form
         </button>
         <div
+          ref={dropdownRef}
           className="note-dropdown-header"
           title="note dropdown"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span>
-            {selectedNote ? notesObj[selectedNote.id]?.title : "Select a Note"}
+            {selectedNote ? notesObj[selectedNote.id]?.title : "Notes"}
           </span>
           <div className={`arrow ${isOpen ? "up" : "down"}`}>⇩</div>
         </div>

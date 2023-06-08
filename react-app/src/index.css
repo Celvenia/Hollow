@@ -9,7 +9,8 @@
 * {
   margin: 0;
   padding: 0;
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
+  border-radius: 5px;
 }
 
 html {
@@ -38,8 +39,14 @@ li {
 }
 
 a {
-  color: #565a75;
+  color: #fafbf6;
   text-decoration: none;
+  background-color: #000;
+}
+
+a:hover {
+ color: #000;
+ background-color: #fafbf6;
 }
 
 h4 {
@@ -68,7 +75,6 @@ input {
   cursor: pointer;
   margin: 1%; 
   font-size: 75%;
-  max-width: 44vw;
 }
 
 button:hover {
@@ -77,7 +83,7 @@ button:hover {
 
 .active {
   font-weight: bold;
-  color: #fafbf6;
+  color: #FFA500;
 }
 
 .flex-column-center {
@@ -128,17 +134,19 @@ main {
   grid-template-rows: repeat(2, 1fr);
   height: 80vh;
   width: 100vw;
+  gap: 1%;
   background-color: #1a1a1a;
   padding: 1%;
 }
 
 .grid-main-item {
-  background-color: #1a1a1a;
+  background-color: #000;
   color: #fafbf6;
   overflow-y: scroll;
   max-height: 50vh;
   max-width: 50vw;
   margin-top: 1%;
+  border-radius: 5px;
 }
 
 .grid-main-item::-webkit-scrollbar {

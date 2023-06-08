@@ -1,9 +1,15 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
 
 .note-page {
     color: #fff;
     background-color: #000;
-    width: 46vw;
-    height: 100vh;
+    width: 47vw;
+    max-width: 47vw;
     border-radius: 5px;
 }
 
@@ -14,20 +20,21 @@
   align-items: center;
   background-color: #000;
   width: 47vw;
+  height: auto;
 }
 
 .note-textarea{
-  width: 42vw;
-  max-width: 42vw;
-  min-height: 18vh;
+  width: 47vw;
+  max-width: 47vw;
+  min-height: 22.5vh;
   height: 18vh;
-  padding: 20px;
+  padding: 1%;
   font-size: 16px;
+  margin-left: 1%;
 }
 
 .svg-inline--fa.fa-pen {
-    justify-self: center;
-    align-self: center;
+  cursor: pointer;
 }
 
 .note-buttons {
@@ -35,4 +42,15 @@
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;
+}
+
+.note-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f0f1b;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
 }

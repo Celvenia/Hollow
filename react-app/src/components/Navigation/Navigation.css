@@ -21,14 +21,41 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: #1a1a1a;
-  padding-top: 20px;
-  padding-left: 50px;
-  padding-right: 50px;
-  height: 3vh;
+  padding: 2%;
+  height: 5vh;
   z-index: 10;
-  margin-bottom: 1%;
+  overflow: hidden;
 }
 
+.nav-icon {
+  position: relative;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav-icon:hover {
+  filter:brightness(50%)
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  position: absolute;
+  margin-top: 2%;
+  border-radius: 5px;
+  border: 1px solid #fafbf6;
+  padding: 1%;
+}
+
+.nav-links > div {
+  background-color: #000;
+  margin: 1%;
+}
+
+#nav-display-text {
+  color: #fafbf6;
+}
 
 .user-profile-img {
   height: 30px;

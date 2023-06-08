@@ -1,28 +1,55 @@
+/* Hollow Knight palette */
+/* #0f0f1b black */
+/* #1a1a1a black (darker) */
+/* #565a75 grey */
+/* #fafbf6 white */
+/* #fff white (generic) */
+
 .note-create-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  max-width: 47vw;
+  max-width: 49vw;
+  min-height: 30%;
   height: 100%;
   background-color: #000;
   border-radius: 5px;
 }
 
-.note-create-form-element {
-
-}
+.note-create-h4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: #0f0f1b;
+    margin: 0;
+  }
 
 .note-create-textarea {
-    min-width: 45vw;
-    min-height: 14vh;
-    max-width: 45vw;
+    min-width: 47vw;
+    min-height: 15.5vh;
+    max-height: 100vh;
+    max-width: 47vw;
     border-radius: 5px;
 }
 
+.note-create-textarea > * {
+    min-height: 100%;
+}
+
 .note-create-input {
-    max-width: 44vw;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
+    max-width: 49vw;
+    margin:0;
+}
+
+.note-create-form-element{
+    background-color: #0f0f1b;
+    width: 100%
+}
+
+.note-create-form-element > label {
+    margin-left: 1%
 }

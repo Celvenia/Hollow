@@ -12,6 +12,7 @@ import Notes from "./components/Notes";
 import Conversation from "./components/Conversation";
 import Clock from "./components/Clock";
 import Calendar from "./components/Calendar";
+import Reminders from "./components/Reminders";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,9 @@ function App() {
                     </Route>
                     <Route path="/notes">
                       <Notes />
+                    </Route>
+                    <Route path="/reminders">
+                      <Reminders />
                     </Route>
                   </Switch>
                 )}

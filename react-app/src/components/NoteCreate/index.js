@@ -29,9 +29,10 @@ export default function NoteCreate() {
 
   return (
     <div className="note-create-container">
-      <h4>New Note</h4>
+      <h4 className="note-create-h4">New Note</h4>
       <form onSubmit={handleSubmit}>
         <div className="note-create-form-element">
+            <label>Title</label>
           <input
            className="note-create-input"
            title="note title"
@@ -42,6 +43,7 @@ export default function NoteCreate() {
           />
         </div>
         <div className="note-create-form-element">
+        <label>Content</label>
           <textarea
             className="note-create-textarea"
             title="note context"
