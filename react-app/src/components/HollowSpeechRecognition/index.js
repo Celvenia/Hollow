@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { postMessage } from "../../store/message";
 
 import "./HollowSpeechRecognition.css";
-import { getConversation } from "../../store/conversation";
+import { getConversations } from "../../store/conversation";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#html_and_css_2
 export default function HollowSpeechRecognition() {
@@ -12,15 +12,13 @@ export default function HollowSpeechRecognition() {
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const SpeechGrammarList =
     window.SpeechGrammarList || window.webkitSpeechGrammarList;
-  const SpeechRecognitionEvent =
-    window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+  // const SpeechRecognitionEvent =
+  //   window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
-  const [spoken, setSpoken] = useState("");
+  const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
   const [diagnosticText, setDiagnosticText] = useState("");
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(null);
@@ -43,17 +41,18 @@ export default function HollowSpeechRecognition() {
   }, []);
 
   useEffect(() => {
-    getConversation();
+    getConversations();
   }, [dispatch]);
 
   const hollowStart = async (e) => {
     e.preventDefault();
+
     // create new SpeechRecognition and SpeechGrammarList instances
     const hollow = new SpeechRecognition();
     const speechRecognitionList = new SpeechGrammarList();
     setActive(true);
 
-    const keyWords = ["stop listening", "Hollow"];
+    const keyWords = ["stop listening", "hey Hollow"];
 
     // Grammar - separated by semi-colons
     // 1: states the format and version used. This always needs to be included first. i.e #JSGF V1.0;
@@ -77,7 +76,7 @@ export default function HollowSpeechRecognition() {
     hollow.maxAlternatives = 1;
 
     hollow.start();
-    setSpoken("started listening");
+    setMessage("started listening");
     // results event returns SpeechRecognitionResultList object containing SpeechRecognitionResult objects
     // it has a getter enabling list/array access
     // SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual recognized words.
@@ -87,22 +86,6 @@ export default function HollowSpeechRecognition() {
     // Receiving and Handling Results
     hollow.onresult = (event) => {
       let timeout;
-      const queries = [
-        "Hollow who is",
-        "Hollow what is",
-        "Hollow where is",
-        "Hollow how is",
-        "Hollow when is",
-        "Hollow why is",
-        "Hollow who are",
-        "Hollow what are",
-        "Hollow where are",
-        "Hollow when are",
-        "Hollow why are",
-        "Hollow how are",
-        "Hollow how can",
-        "Hollow create",
-      ];
 
       const tabs = [
         "notes",
@@ -123,7 +106,23 @@ export default function HollowSpeechRecognition() {
       const seconds = date.getSeconds();
 
       const alarmTime = document.getElementById("alarm-time");
-      let speaking = document.getElementById("nav-display-text");
+      let speaking = document.getElementById("user-display-text");
+      let aiSpeaking = document.getElementById("ai-display-text");
+
+      const displayText = (text) => {
+        const delay = 500;
+        let index = 0;
+        const words = text.split(" ");
+
+        const interval = setInterval(() => {
+          if (index < words.length) {
+            aiSpeaking.innerText += words[index] + " ";
+            index++;
+          } else {
+            clearInterval(interval);
+          }
+        }, delay);
+      };
 
       const speak = (spoken) => {
         // was preventing ai_response
@@ -162,18 +161,20 @@ export default function HollowSpeechRecognition() {
       };
 
       const processResult = (spoken) => {
+        const conversation = {
+          conversation_id: 6,
+          message: "",
+        };
+
         speaking.innerText = spoken;
         clearTimeout(timeout);
         timeout = setTimeout(() => {
-          speaking.innerText = ""
+          speaking.innerText = "";
+          aiSpeaking.innerText = "";
         }, 15000);
         if (!currentUser) {
           speak(
             "Greetings weary traveler! I am Hollow, the guardian of this realm. To embark on your journey, seek passage by logging in"
-          );
-        } else if (spoken === "Hello".toLowerCase()) {
-          speak(
-            "Greetings fellow wanderer! I am Hollow, your guide through this realm. I shall assist you in navigating its paths, crafting notes, reminders, alarms, and unveiling the answers to your queries."
           );
         } else if (spoken.includes("stop listening")) {
           speak("farewell");
@@ -190,26 +191,35 @@ export default function HollowSpeechRecognition() {
             year: "numeric",
           });
           speak(`the current date is ${formattedDate}`);
-        } else if (spoken.includes("when is my alarm")) {
+        } else if (spoken.includes("when is my next alarm")) {
           // HH:mm
-          alarmTime.value = "05:06";
+          // alarmTime.value = "05:06";
           console.log(alarmTime.value);
-        } else if (queries.some((query) => spoken.includes(query))) {
+          // } else if (queries.some((query) => spoken.includes(query))) {
+        } else if (spoken.includes("hey Hollow")) {
           let spokenAfter = spoken.split("Hollow")[1];
-          speak(spokenAfter);
-          dispatch(postMessage(spokenAfter.toString())).then((result) =>
-            speak(result.ai_response)
-          );
-        } else if (spoken.includes("navigate".toLowerCase())) {
+          conversation.message = spokenAfter.toString();
+          dispatch(postMessage(conversation)).then((result) => {
+            if (result) {
+              speak(result.ai_response);
+              displayText(result.ai_response);
+            }
+          });
+        } else if (spoken.includes("navigate to".toLowerCase())) {
           let page = spoken.split("navigate to ")[1];
           if (tabs.includes(page)) {
             if (page === "home") {
               page = "";
               speak(`navigating to home`);
+              displayText(`navigating to home`);
             } else if (page !== "home") {
               speak(`navigating to ${page}`);
+              displayText(`navigating to ${page}`);
             }
             history.push(`/${page}`);
+          } else {
+            speak("4 oh 4 page not found");
+            displayText("404 page not found");
           }
         }
       };
@@ -220,9 +230,7 @@ export default function HollowSpeechRecognition() {
         // clear previous timeout
         clearTimeout(timeout);
         timeout = setTimeout(() => {
-          setSpoken(spoken);
           processResult(spoken);
-          //   speak(messagesArr ? messagesArr[messagesArr.length - 1]?.ai_response : "")
         }, 2000);
       }
     };
@@ -232,9 +240,14 @@ export default function HollowSpeechRecognition() {
     hollow.onspeechend = () => {
       hollow.stop();
       setActive(false);
-      setSpoken("");
-      let speaking = document.getElementById("nav-display-text");
-      speaking.innerText = ""
+      let speaking = document.getElementById("user-display-text");
+      if (speaking) {
+        speaking.innerText = "";
+      }
+      let aiSpeaking = document.getElementById("ai-display-text");
+      if (aiSpeaking) {
+        speaking.innerText = "";
+      }
       return;
     };
 

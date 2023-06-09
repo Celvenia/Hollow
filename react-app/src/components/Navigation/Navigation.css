@@ -22,7 +22,7 @@
   justify-content: space-between;
   background-color: #1a1a1a;
   padding: 2%;
-  height: 5vh;
+  height: 10vh;
   z-index: 10;
   overflow: hidden;
 }
@@ -53,8 +53,16 @@
   margin: 1%;
 }
 
-#nav-display-text {
+.nav-display-text {
+  display: flex;
+  flex-direction: column;
+}
+
+#user-display-text {
   color: #fafbf6;
+}
+#ai-display-text {
+  color:#565a75;
 }
 
 .user-profile-img {

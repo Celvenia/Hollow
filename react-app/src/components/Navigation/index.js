@@ -13,9 +13,9 @@ function Navigation({ isLoaded }) {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-	// if DOM element rendered && event.target(click) is not contained in DOM element setShow(false)
+      // if DOM element rendered && event.target(click) is not contained in DOM element setShow(false)
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-		setShow(false)
+        setShow(false);
       }
     };
 
@@ -27,7 +27,7 @@ function Navigation({ isLoaded }) {
   }, []);
 
   const handleIconClick = (e) => {
-	// click event was propagating to document, preventing dropdown from opening
+    // click event was propagating to document, preventing dropdown from opening
     e.stopPropagation();
     setShow(!show);
   };
@@ -67,16 +67,19 @@ function Navigation({ isLoaded }) {
               Alarms
             </NavLink>
           </div>
-          {/* <div>
+          <div>
             <NavLink exact to="/testing">
               Testing
             </NavLink>
-          </div> */}
+          </div>
         </ul>
       ) : (
         ""
       )}
-      <div id="nav-display-text"></div>
+      <div className="nav-display-text">
+        <div id="user-display-text"></div>
+        <div id="ai-display-text"></div>
+      </div>
       {isLoaded && (
         <div>
           <ProfileButton user={sessionUser} />

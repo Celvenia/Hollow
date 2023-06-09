@@ -4,6 +4,7 @@ const GET_REMINDERS = "reminder/GET_REMINDERS";
 const UPDATE_REMINDER = "reminder/UPDATE_REMINDER"
 const POST_REMINDER = "reminder/POST_REMINDER";
 const DELETE_REMINDER = "reminder/DELETE_REMINDER"
+const CHECK_UPDATE_REMINDER = "reminder/CHECK_UPDATE_REMINDER"
 
 
 // action creators - define actions (objects with type/data)
@@ -32,7 +33,13 @@ const deleteReminderAC = (data) => ({
   data
 })
 
+const checkUpdateReminderAC = (data) => ({
+  type: CHECK_UPDATE_REMINDER,
+  data
+})
+
 // thunk action creators - for asynchronous code, i.e., fetch calls prior to dispatching action creators
+// read reminder
 export const getReminder = (id) => async (dispatch) => {
   const response = await fetch(`/api/reminders/${id}`)
 
@@ -50,6 +57,8 @@ export const getReminder = (id) => async (dispatch) => {
   }
 };
 
+
+// read reminders
 export const getReminders = () => async (dispatch) => {
   const response = await fetch("/api/reminders");
 
@@ -67,6 +76,7 @@ export const getReminders = () => async (dispatch) => {
   }
 };
 
+// create reminder
 export const postReminder = (reminder) => async (dispatch) => {
   const response = await fetch("/api/reminders", {
     method: "POST",
@@ -90,6 +100,7 @@ export const postReminder = (reminder) => async (dispatch) => {
   }
 };
 
+// update reminder
 export const updateReminder = (reminder) => async (dispatch) => {
 
   const response = await fetch(`/api/reminders/${reminder.id}`, {
@@ -136,6 +147,26 @@ export const deleteReminder = (id) => async (dispatch) => {
   }
 };
 
+// check and update reminders
+export const checkAndUpdateReminders = () => async (dispatch) => {
+  const response = await fetch("/api/reminders/check-and-update", {
+    method: "POST",
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(checkUpdateReminderAC(data))
+  } else if (response.status < 500) {
+    const data = await response.json();
+    if (data.errors) {
+      return data.errors;
+    }
+  } else {
+    return ["An error occurred. Please try again."];
+  }
+};
+
+
 // state
 const initialState = {};
 
@@ -164,6 +195,12 @@ export default function reminderReducer(state = initialState, action) {
     case DELETE_REMINDER: {
       delete newState[action.data.deleted.id]
       return newState
+    }
+    case CHECK_UPDATE_REMINDER: {
+      action.data.reminders.forEach(reminder => {
+        newState[reminder.id] = reminder
+      })
+      return newState;
     }
     default:
       return state;

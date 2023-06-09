@@ -5,18 +5,30 @@ from datetime import datetime
 
 reminder_routes = Blueprint('reminders', __name__)
 
+# strptime - string parse time methods
+# %H: 2-digit hour (24-hour format)
+# %M: 2-digit minute (01, 59)
+# %S: 2-digit second (01, 59)
+# %a: Weekday as locale's abbreviated name (Sun, Mon, Tue)
+# %d: Day of the month as a zero-padded decimal number (01, 31)
+# %m: 2-digit month (01, 12)
+# %b: Month as locale's abbreviated name (Jan, Feb, etc)
+# %Y: Year with century as a decimal number (2023)
+
+# date_str = request.json.get('date')
+# date = datetime.strptime(date_str, '%Y-%m-%d').date()
+
+
+
 # Get all reminders
-
-
 @reminder_routes.route('', methods=['GET'])
 @login_required
 def get_reminders():
-    reminders = Reminder.query.filter_by(user_id=current_user.id)
+    reminders = Reminder.query.filter_by(user_id=current_user.id).all()
     return {'reminders': [reminder.to_dict() for reminder in reminders]}
 
+
 # Get reminder by id
-
-
 @reminder_routes.route('/<int:id>', methods=['GET'])
 @login_required
 def get_reminder(id):
@@ -27,14 +39,17 @@ def get_reminder(id):
 
     return reminder.to_dict()
 
+
 # Create reminder
-
-
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
+    current = datetime.now().date()
+
     date_str = request.json.get('date')
     date = datetime.strptime(date_str, '%Y-%m-%d').date()
+    if(date < current):
+        return {'errors': ['Cannot set reminder in the past']}
     time = request.json.get('time')
     title = request.json.get('title')
     description = request.json.get('description')
@@ -59,9 +74,8 @@ def create_reminder():
 
     return new_reminder.to_dict(), 201
 
+
 # Update reminder by id
-
-
 @reminder_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_reminder(id):
@@ -95,9 +109,8 @@ def update_reminder(id):
 
     return reminder.to_dict(), 200
 
+
 # Delete reminder by id
-
-
 @reminder_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_reminder(id):
@@ -113,3 +126,27 @@ def delete_reminder(id):
     db.session.commit()
 
     return {"deleted": reminder.to_dict()}
+
+
+# check and update reminders that have passed current date/time
+@reminder_routes.route('/check-and-update', methods=['POST'])
+@login_required
+def check_and_update_reminders():
+    now = datetime.now()
+
+    reminders = Reminder.query.filter_by(user_id=current_user.id).all()
+
+    for reminder in reminders:
+        # Convert reminder.date string to datetime.date object
+        # reminder_date = datetime.strptime(reminder.date, '%a, %d %b %Y').date()
+
+        # Set status to "completed" for past reminders
+        if reminder.date < now.date():
+            reminder.status = 'completed'
+        # Set status to "completed" for reminders with a past time on the current date
+        elif reminder.date == now and reminder.time < datetime.now().time():
+            reminder.status = 'completed'
+
+    db.session.commit()
+    reminders = Reminder.query.filter_by(user_id=current_user.id).all()
+    return {'reminders': [reminder.to_dict() for reminder in reminders]}

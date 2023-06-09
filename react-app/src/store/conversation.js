@@ -1,12 +1,12 @@
 // constant variables for action creator
-const GET_CONVERSATION = "CONVERSATION/GET_CONVERSATION";
+const GET_CONVERSATIONS = "CONVERSATION/GET_CONVERSATIONS";
 const UPDATE_CONVERSATION = "CONVERSATION/UPDATE_CONVERSATION";
 const POST_CONVERSATION = "CONVERSATION/POST_CONVERSATION";
 const DELETE_CONVERSATION = "CONVERSATION/DELETE_CONVERSATION";
 
 // action creators - define actions (objects with type/data)
-const getConversationAC = (data) => ({
-  type: GET_CONVERSATION,
+const getConversationsAC = (data) => ({
+  type: GET_CONVERSATIONS,
   data,
 });
 
@@ -25,13 +25,15 @@ const deleteConversationAC = (data) => ({
   data,
 });
 
+
+
 // thunk action creators - for asynchronous code, i.e., fetch calls prior to dispatching action creators
-export const getConversation = () => async (dispatch) => {
+export const getConversations = () => async (dispatch) => {
   const response = await fetch(`/api/conversations`);
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(getConversationAC(data));
+    dispatch(getConversationsAC(data));
     return data;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -90,8 +92,8 @@ export const updateConversation = (conversation) => async (dispatch) => {
   }
 };
 
-export const deleteConversation = () => async (dispatch) => {
-  const response = await fetch(`/api/conversations`, {
+export const deleteConversation = (id) => async (dispatch) => {
+  const response = await fetch(`/api/conversations/${id}`, {
     method: "DELETE",
   });
 
@@ -109,6 +111,7 @@ export const deleteConversation = () => async (dispatch) => {
   }
 };
 
+
 // state
 const initialState = {};
 
@@ -116,15 +119,17 @@ const initialState = {};
 export default function conversationReducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
-    case GET_CONVERSATION: {
-      return { ...newState, ...action.data };
+    case GET_CONVERSATIONS: {
+      action.data.conversations.forEach(conversation => {
+        newState[conversation.id] = conversation
+      })
     }
     case POST_CONVERSATION: {
       newState[action.data.id] = action.data;
       return newState;
     }
     case UPDATE_CONVERSATION: {
-      newState.title = action.data.title;
+      newState[action.data.id] = action.data;
       return newState;
     }
     case DELETE_CONVERSATION: {

@@ -13,6 +13,8 @@ import Conversation from "./components/Conversation";
 import Clock from "./components/Clock";
 import Calendar from "./components/Calendar";
 import Reminders from "./components/Reminders";
+import Testing from "./components/Testing";
+import Conversations from "./components/Conversations";
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +60,9 @@ function App() {
                     </Route>
                     <Route path="/reminders">
                       <Reminders />
+                    </Route>
+                    <Route path="/testing">
+                      <Conversations />
                     </Route>
                   </Switch>
                 )}

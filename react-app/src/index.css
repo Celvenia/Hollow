@@ -11,6 +11,7 @@
   padding: 0;
   box-sizing: border-box;
   border-radius: 5px;
+  letter-spacing: 0.1rem;
 }
 
 html {
@@ -173,4 +174,8 @@ main {
 
 .length-100 {
   width: 100%
+}
+
+.error-message {
+  color: #FFA500;
 }

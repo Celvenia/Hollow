@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Clock.css";
-import Reminders from "../Reminders";
-import { getReminders } from "../../store/reminder";
 
 export default function Clock() {
   const [currentTime, setCurrentTime] = useState(
@@ -20,9 +18,6 @@ export default function Clock() {
     };
   }, [alarmTime]);
 
-//   useEffect(() => {
-//     getReminders()
-//   },[])
 
   const handleRemoveAlarm = () => {
     setAlarmTime("");
@@ -50,7 +45,6 @@ export default function Clock() {
 
   return (
     <div className="clock flex-column-center">
-        {/* <Reminders /> */}
       {isAlarmSet && (
         <p>
           Alarm is set for: <strong>{alarmTime}</strong>
