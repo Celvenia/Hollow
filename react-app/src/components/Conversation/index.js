@@ -36,7 +36,7 @@ export default function Conversation() {
   const topOfConversation = useRef(null);
   const dropdownRef = useRef();
   const conversation = conversationsObj[id] || undefined;
-  
+
   // const [messages, setMessages] = useState(null);
 
   const handleEditClick = () => {
@@ -218,17 +218,20 @@ export default function Conversation() {
               ""
             ) : conversationsArr ? (
               <div className="conversations-dropdown" ref={dropdownRef}>
-                {conversationsArr && conversationsArr.map((conversation) => {
-                  return (
-                    <div
-                      key={`conversation ${conversation.id}`}
-                      className="conversation-title"
-                      onClick={(e) => handleSetConversationClick(conversation)}
-                    >
-                      {conversation && conversation.title}
-                    </div>
-                  );
-                })}
+                {conversationsArr &&
+                  conversationsArr.map((conversation) => {
+                    return (
+                      <div
+                        key={`conversation ${conversation.id}`}
+                        className="conversation-title"
+                        onClick={(e) =>
+                          handleSetConversationClick(conversation)
+                        }
+                      >
+                        {conversation && conversation.title}
+                      </div>
+                    );
+                  })}
               </div>
             ) : (
               ""
@@ -251,9 +254,11 @@ export default function Conversation() {
       ) : id ? (
         <div className="title-inactive-edit">
           <span title="conversation title">
-            <h4 id="set-conversation" data-conversation-id={conversation.id}>
-              {title}
-            </h4>
+            {conversation && (
+              <h4 id="set-conversation" data-conversation-id={conversation.id}>
+                {title}
+              </h4>
+            )}
           </span>
           <FontAwesomeIcon
             icon={faPen}
