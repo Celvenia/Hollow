@@ -5,9 +5,9 @@ import { authenticate } from "./store/session";
 
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
+import ShadowSpeechRecognition from "./components/ShadowSpeechRecognition";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
-import HollowSpeechRecognition from "./components/HollowSpeechRecognition";
 import Notes from "./components/Notes";
 import Conversation from "./components/Conversation";
 import Clock from "./components/Clock";
@@ -29,7 +29,7 @@ function App() {
 
       <div className="app-container">
         <header>
-          <HollowSpeechRecognition />
+          <ShadowSpeechRecognition />
           <Navigation isLoaded={isLoaded} />
         </header>
         {!currentUser && (
@@ -61,9 +61,9 @@ function App() {
                     <Route path="/reminders">
                       <Reminders />
                     </Route>
-                    <Route path="/testing">
+                    {/* <Route path="/testing">
                       <Conversations />
-                    </Route>
+                    </Route> */}
                   </Switch>
                 )}
               </div>

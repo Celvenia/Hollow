@@ -1,70 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { postReminder } from "../../store/reminder";
-import { useDispatch } from "react-redux";
-import "./ReminderForm.css";
+import React, { useState } from "react";
+import { checkAndUpdateReminders, postReminder } from "../../store/reminder";
+import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../../context/Modal";
+import "./ReminderForm.css"
 
-export default function ReminderForm({ selectedDate }) {
+// date default input - yyyy-mm-dd
+// time default input - HH:mm
+export default function ReminderForm() {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState([]);
+  const { closeModal } = useModal();
 
-  const handleAddReminder = (e) => {
+  const handleUpdateReminder = (e) => {
     e.preventDefault();
     setErrors([]);
-    const { date, time, title, description, location, recurring } =
+    const { date, title, description, location, recurring } =
       e.target.elements;
 
-    // current military time
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-
-    let currentHour = Number(currentTime.split(":")[0]);
-    let currentMinutes = currentTime.split(":")[1];
-    let inputHour = Number(time.value.split(":")[0]);
-    let inputMinutes = Number(time.value.split(":")[1]);
-
-    if (currentHour > inputHour && currentMinutes > inputMinutes) {
-      setErrors(["Reminder cannot be set before the current time"]);
-      return;
-    }
-
-    const currentDate = new Date();
-    const selectedDateValue = new Date(date.value);
-    if (currentDate > selectedDateValue) {
-      setErrors(["Reminder cannot be set before the current date"]);
-      return;
-    }
-
     const newReminder = {
-      date: date.value,
-      time: timeConverter(time.value),
-      title: title.value || "undefined",
-      description: description.value || "undefined",
-      location: location.value || "undefined",
-      recurring: recurring.checked || false,
+      date_time: date.value,
+      title: title.value,
+      description: description.value,
+      location: location.value || false,
+      recurring: recurring.checked,
       status: "active",
     };
+  
 
     dispatch(postReminder(newReminder));
-
-    e.target.reset();
+    closeModal();
   };
 
-  const timeConverter = (timeValue) => {
-    const hour = parseInt(timeValue);
-    const minutes = timeValue.split(":")[1];
-    return hour < 12
-      ? `${timeValue} AM`
-      : `${hour - 12 === 0 ? 12 : hour - 12}:${minutes} PM`;
-  };
-
-  useEffect(() => {
-    if (selectedDate) {
-      document.getElementById("date").value = selectedDate;
-    }
-  }, [selectedDate]);
 
   return (
     <div className="reminders">
@@ -77,31 +43,53 @@ export default function ReminderForm({ selectedDate }) {
           ))}
         </div>
       )}
-      <form className="reminder-form" onSubmit={handleAddReminder}>
+      <form className="reminder-form" onSubmit={handleUpdateReminder}>
         <h4 className="reminders-heading">Set Reminder</h4>
         <label className="form-label">Date:</label>
         <input
-          type="date"
+          type="datetime"
           id="date"
           className="form-input"
           required
+          placeholder="YYYY-MM-DD HH:MM:SS"
+          title="datetime"
           min={new Date().toISOString().slice(0, 10)}
         />
 
-        <label className="form-label">Time:</label>
-        <input type="time" id="time" className="form-input" required />
-
         <label className="form-label">Title:</label>
-        <input type="text" id="title" className="form-input" />
+        <input
+          type="text"
+          id="title"
+          className="form-input"
+          placeholder="title"
+          title="title"
+        />
 
         <label className="form-label">Description:</label>
-        <textarea type="text" id="description" className="form-input" />
+        <textarea
+          type="text"
+          id="description"
+          className="form-input"
+          placeholder="description"
+          title="description"
+        />
 
         <label className="form-label">Location:</label>
-        <input type="text" id="location" className="form-input" />
+        <input
+          type="text"
+          id="location"
+          className="form-input"
+          placeholder="location"
+          title="location"
+        />
         <span>
           <label className="form-label">Recurring:</label>
-          <input type="checkbox" id="recurring" className="form-input" />
+          <input
+            type="checkbox"
+            id="recurring"
+            className="form-input"
+            title="recurring"
+          />
         </span>
 
         <button type="submit" className="form-button">

@@ -6,7 +6,7 @@
 /* #fff white (generic) */
 
 
-.hollow-banner-true {
+.shadow-banner-true {
         background-image: url('../../assets/BannerActive.gif');
         background-repeat: no-repeat;
         background-size: cover;
@@ -14,7 +14,7 @@
         height: 12vh;
 }
 
-.hollow-banner-false {
+.shadow-banner-false {
     background-image: url('../../assets/BannerInactive.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -23,7 +23,7 @@
 
 }
 
-#hollow-button-true {
+#shadow-button-true {
     position: relative;
     background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
     background-repeat: no-repeat;
@@ -38,7 +38,7 @@
     cursor: pointer;
   }
 
-#hollow-button-false {
+#shadow-button-false {
     position: relative;
     background-image: url('https://res.cloudinary.com/dtzv3fsas/image/upload/v1685361334/Personal%20Assistant/image_6_iqnnrk.png');
     background-repeat: no-repeat;

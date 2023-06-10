@@ -42,6 +42,7 @@ export default function Clock() {
       setIsSnoozeEnabled(false);
     }, 5000);
   };
+  
 
   return (
     <div className="clock flex-column-center">

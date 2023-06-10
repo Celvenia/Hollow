@@ -83,6 +83,7 @@ export default function Conversation() {
       message: messageToPost,
     };
     dispatch(postMessage(conversation));
+    setMessageToPost("");
   };
 
   const handleMessageToPost = (e) => {
@@ -91,11 +92,10 @@ export default function Conversation() {
 
   const handleCreateConversation = () => {
     const newConversation = {
-      "title": "New Conversation"
-    }
-    dispatch(postConversation(newConversation))
-  }
-
+      title: "New Conversation",
+    };
+    dispatch(postConversation(newConversation));
+  };
 
   const handleScrollToBottom = () => {
     bottomOfConversation.current.scrollIntoView({
@@ -122,8 +122,6 @@ export default function Conversation() {
   const handleSetConversationClick = (conversation) => {
     setId(conversation.id);
     setShowDropdown(false);
-    console.log(conversation);
-    dispatch(getMessages(conversation.id));
   };
 
   useEffect(() => {
@@ -144,7 +142,6 @@ export default function Conversation() {
     dispatch(getConversations());
     if (id) {
       dispatch(getMessages(id));
-
     }
   }, [dispatch, id]);
 
@@ -152,8 +149,8 @@ export default function Conversation() {
     if (conversation) {
       setTitle(conversation.title);
     }
-    if(!conversation) {
-      setTitle("")
+    if (!conversation) {
+      setTitle("");
     }
   }, [conversation]);
 
@@ -163,13 +160,18 @@ export default function Conversation() {
         ref={topOfConversation}
         className="length-100 conversation-button-container"
       >
-        <button onClick={handleScrollToBottom}>⇩</button>
+        {display && conversation && (
+          <button onClick={handleScrollToBottom}>⇩</button>
+        )}
         {show ? (
           <>
-            <button onClick={handleConversationShowClick}>
+            <button
+              onClick={handleConversationShowClick}
+              title="display conversation messages"
+            >
               <FontAwesomeIcon icon={faEyeSlash} />
             </button>
-            <button onClick={handleIconClick}>
+            <button onClick={handleIconClick} title="choose conversation">
               <FontAwesomeIcon icon={faComments} className="nav-icon" />
             </button>
             {!showDropdown ? (
@@ -179,16 +181,11 @@ export default function Conversation() {
                 {conversationsArr.map((conversation) => {
                   return (
                     <div
-                      className="conversations-options"
                       key={`conversation ${conversation.id}`}
+                      className="conversation-title"
+                      onClick={(e) => handleSetConversationClick(conversation)}
                     >
-                      <div
-                        onClick={(e) =>
-                          handleSetConversationClick(conversation)
-                        }
-                      >
-                        {conversation && conversation.title}
-                      </div>
+                      {conversation && conversation.title}
                     </div>
                   );
                 })}
@@ -196,7 +193,10 @@ export default function Conversation() {
             ) : (
               ""
             )}
-            <button>
+            <button
+              onClick={handleCreateConversation}
+              title="create conversation"
+            >
               <FontAwesomeIcon icon={faPlus} />
             </button>
             <button onClick={handleDeleteConversationClick}>
@@ -221,16 +221,11 @@ export default function Conversation() {
                 {conversationsArr.map((conversation) => {
                   return (
                     <div
-                      className="conversations-options"
                       key={`conversation ${conversation.id}`}
+                      className="conversation-title"
+                      onClick={(e) => handleSetConversationClick(conversation)}
                     >
-                      <div
-                        onClick={(e) =>
-                          handleSetConversationClick(conversation)
-                        }
-                      >
-                        { conversation && conversation.title}
-                      </div>
+                      {conversation && conversation.title}
                     </div>
                   );
                 })}
@@ -256,7 +251,9 @@ export default function Conversation() {
       ) : id ? (
         <div className="title-inactive-edit">
           <span title="conversation title">
-            <h4>{title}</h4>
+            <h4 id="set-conversation" data-conversation-id={conversation.id}>
+              {title}
+            </h4>
           </span>
           <FontAwesomeIcon
             icon={faPen}
@@ -271,13 +268,21 @@ export default function Conversation() {
       <div className="conversation-container">
         {display && (
           <div>
-            {messages && conversation && 
+            {messages &&
+              conversation &&
               messages.map((message) => (
                 <div key={message.id} className="message-container">
                   <div className="user-message">{message.message}</div>
                   <div className="ai-message">{message.ai_response}</div>
                 </div>
               ))}
+            {display && conversation && (
+              <div className="scroll-top-button">
+                <button onClick={handleScrollToTop} ref={bottomOfConversation}>
+                  ⇧
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -288,11 +293,6 @@ export default function Conversation() {
               onChange={handleMessageToPost}
               placeholder="Write a question here, then send query..."
             ></textarea>
-            <div className="scroll-top-button">
-              <button onClick={handleScrollToTop} ref={bottomOfConversation}>
-                ⇧
-              </button>
-            </div>
           </div>
         )}
       </div>

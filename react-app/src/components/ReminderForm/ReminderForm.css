@@ -21,3 +21,12 @@
     max-width: 45vw;
     max-height: 30vh;
 }
+
+.reminder-form > button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+  width: 100%
+}

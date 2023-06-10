@@ -62,7 +62,7 @@ function Navigation({ isLoaded }) {
               Reminders
             </NavLink>
           </div>
-          <div>
+          {/* <div>
             <NavLink exact to="/alarms">
               Alarms
             </NavLink>
@@ -71,14 +71,14 @@ function Navigation({ isLoaded }) {
             <NavLink exact to="/testing">
               Testing
             </NavLink>
-          </div>
+          </div> */}
         </ul>
       ) : (
         ""
       )}
       <div className="nav-display-text">
-        <div id="user-display-text"></div>
         <div id="ai-display-text"></div>
+        <div id="user-display-text"></div>
       </div>
       {isLoaded && (
         <div>

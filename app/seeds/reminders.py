@@ -13,13 +13,12 @@ from datetime import datetime
 # Adds a demo reminder, you can add other reminders here if you want
 def seed_reminders():
     reminder1 = Reminder(
-        date=datetime.strptime("2023-06-05", "%Y-%m-%d"), 
-        time="09:00 AM",  # HH:MM AM || PM
+        date_time=datetime.strptime("2023-06-10 05:00 AM", "%Y-%m-%d %I:%M %p"),
         title="Example",
         description="This is an example reminder",
         recurring=False,
         location="Example Location",
-        status="active", # active, completed, cancelled
+        status="active",  # active, completed, cancelled
         user_id=1
     )
     db.session.add(reminder1)

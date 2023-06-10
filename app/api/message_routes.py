@@ -57,7 +57,7 @@ def create_message():
 
         # Format messages for GPT-3.5 Turbo
         formatted_messages = [
-            {'role': 'system', 'content': 'You are Hollow, a friendly personal assistant chatbot.'}
+            {'role': 'system', 'content': 'You are Shadow, a friendly personal assistant chatbot.'}
         ]
         messages = conversation.messages
         for message in messages:

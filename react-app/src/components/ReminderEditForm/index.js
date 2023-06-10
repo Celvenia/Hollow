@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateReminder } from "../../store/reminder";
+import { checkAndUpdateReminders, updateReminder } from "../../store/reminder";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 
@@ -10,53 +10,26 @@ export default function ReminderEditForm({ id }) {
   const [errors, setErrors] = useState([]);
   const reminderObj = useSelector(state => state.reminderReducer)
   const reminder = reminderObj[id]
-  const formattedDate = new Date(reminder.date).toISOString().split("T")[0];
   const { closeModal } = useModal();
 
   const handleUpdateReminder = (e) => {
     e.preventDefault();
     setErrors([]);
-    const { date, time, title, description, location, recurring, status } =
+    const { date, title, description, location, recurring, status } =
       e.target.elements;
-
-    // current military time
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-
-    let currentHour = Number(currentTime.split(":")[0]);
-    let currentMinutes = currentTime.split(":")[1];
-    let inputHour = Number(time.value.split(":")[0]);
-    let inputMinutes = Number(time.value.split(":")[1]);
-
-    if (currentHour > inputHour && currentMinutes > inputMinutes) {
-      setErrors(["Reminder cannot be set before the current time"]);
-      return;
-    }
-
-    const currentDate = new Date();
-    const selectedDate = new Date(date.value);
-    if (currentDate > selectedDate) {
-      setErrors(["Reminder cannot be set before the current date"]);
-      return;
-    }
 
     const updatedReminder = {
       ...reminder,
-      date: date.value,
-      time: time.value,
+      date_time: date.value,
       title: title.value,
       description: description.value,
       location: location.value,
       recurring: recurring.checked,
       status: status.value,
     };
+  
 
     dispatch(updateReminder(updatedReminder));
-
-    // e.target.reset();
     closeModal();
   };
 
@@ -76,23 +49,13 @@ export default function ReminderEditForm({ id }) {
         <h4 className="reminders-heading">Set Reminder</h4>
         <label className="form-label">Date:</label>
         <input
-          type="date"
+          type="datetime"
           id="date"
           className="form-input"
           required
-          defaultValue={formattedDate}
-          placeholder={formattedDate}
+          defaultValue={reminder.date_time}
+          placeholder={reminder.date_time}
           min={new Date().toISOString().slice(0, 10)}
-        />
-
-        <label className="form-label">Time:</label>
-        <input
-          type="time"
-          id="time"
-          className="form-input"
-          defaultValue={reminder.time.slice(0,5)}
-          placeholder={reminder.time.slice(0,5)}
-          required
         />
 
         <label className="form-label">Title:</label>

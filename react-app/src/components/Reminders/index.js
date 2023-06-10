@@ -13,12 +13,11 @@ export default function Reminders() {
 
   useEffect(() => {
     dispatch(checkAndUpdateReminders())
-    dispatch(getReminders());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
-      <h4 className="reminders-heading">Reminders</h4>
+      <h4 className="reminders-title">Reminders</h4>
 
       {remindersArr.length === 0 ? (
         <p className="no-reminders">No reminders.</p>

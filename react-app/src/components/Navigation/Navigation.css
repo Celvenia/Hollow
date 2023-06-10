@@ -21,7 +21,7 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: #1a1a1a;
-  padding: 2%;
+  padding: 1%;
   height: 10vh;
   z-index: 10;
   overflow: hidden;
@@ -46,6 +46,7 @@
   border-radius: 5px;
   border: 1px solid #fafbf6;
   padding: 1%;
+  z-index: 10;
 }
 
 .nav-links > div {
@@ -56,11 +57,13 @@
 .nav-display-text {
   display: flex;
   flex-direction: column;
+  
 }
 
 #user-display-text {
   color: #fafbf6;
 }
+
 #ai-display-text {
   color:#565a75;
 }

@@ -36,12 +36,10 @@ export default function Reminder({ reminder }) {
     dispatch(deleteReminder(reminder.id));
   };
 
-  const handleEditClick = () => {};
-
   return (
     <div className="reminder-item">
       <div className="reminder-info">
-        {reminder.date.slice(0, 16)} {reminder.time}
+        {reminder.date_time}
         <div>{reminder.description}</div>
         {show && (
           <div>

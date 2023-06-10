@@ -87,9 +87,11 @@
 }
 
 #message-textarea {
-  min-height: 21vh;
-  max-width: 47vw;
-  min-width: 47vw;
+  min-height: 24vh;
+  max-height: 24vh;
+  max-width: 46vw;
+  min-width: 46vw;
+  padding: 1%;
 }
 
 .scroll-top-button {
@@ -104,7 +106,8 @@
   background-color: #000;
   color: #fff;
   position: absolute;
-  margin-top: 5%;
+  margin-top: 3.75%;
+  left: 8%;
   border-radius: 5px;
   border: 1px solid #fafbf6;
   padding: 1%;
@@ -115,18 +118,19 @@
   background-color: #000;
 }
 
-.conversations-options > div {
-  margin: 1%;
+.conversation-title {
+  border-bottom: 1px solid #565a75;
+  width:100%;
 }
 
-.conversations-options > div:hover {
+.conversation-title:hover {
   color: #000;
   background-color: #fafbf6;
   font-weight: 700;
   cursor: pointer;
 }
 
-.svg-inline--fa.fa-comments.nav-icon {
+.svg-inline--fa.fa-comments {
   position: relative;
   color: #fff;
   cursor: pointer;
