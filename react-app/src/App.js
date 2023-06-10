@@ -61,9 +61,9 @@ function App() {
                     <Route path="/reminders">
                       <Reminders />
                     </Route>
-                    {/* <Route path="/testing">
-                      <Conversations />
-                    </Route> */}
+                    <Route path="/testing">
+                      <Testing />
+                    </Route>
                   </Switch>
                 )}
               </div>

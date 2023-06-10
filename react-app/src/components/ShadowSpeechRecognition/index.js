@@ -146,7 +146,7 @@ export default function ShadowSpeechRecognition() {
         aiSpeaking.innerText = "";
         const interval = setInterval(() => {
           if (index < letters.length) {
-            if (counter === 100) {
+            if (counter === 50) {
               counter = 0;
             } else {
               counter += 1;

@@ -21,7 +21,6 @@ import {
 export default function Conversation() {
   const conversationsObj = useSelector((state) => state.conversationReducer);
   const conversationsArr = Object.values(conversationsObj);
-  //   testing
   const messagesObj = useSelector((state) => state.messageReducer);
   const messages = Object.values(messagesObj);
   const dispatch = useDispatch();
@@ -36,7 +35,8 @@ export default function Conversation() {
   const bottomOfConversation = useRef(null);
   const topOfConversation = useRef(null);
   const dropdownRef = useRef();
-  const conversation = conversationsObj[id];
+  const conversation = conversationsObj[id] || undefined;
+  
   // const [messages, setMessages] = useState(null);
 
   const handleEditClick = () => {
@@ -218,7 +218,7 @@ export default function Conversation() {
               ""
             ) : conversationsArr ? (
               <div className="conversations-dropdown" ref={dropdownRef}>
-                {conversationsArr.map((conversation) => {
+                {conversationsArr && conversationsArr.map((conversation) => {
                   return (
                     <div
                       key={`conversation ${conversation.id}`}
