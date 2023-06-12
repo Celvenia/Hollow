@@ -22,11 +22,11 @@ export default function Reminders() {
     <div>
       <h4 className="reminders-title">Reminders</h4>
 
-      {activeRemindersArr.length === 0 ? (
+      {activeRemindersArr && activeRemindersArr.length === 0 ? (
         <p className="no-reminders">No reminders.</p>
       ) : (
         <ul className="reminders-list">
-          {remindersArr.map((reminder) =>
+          {activeRemindersArr && activeRemindersArr.map((reminder) =>
             reminder.status === "active" ? (
               <Reminder reminder={reminder} key={reminder.id} />
             ) : null

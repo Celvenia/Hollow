@@ -26,13 +26,14 @@ export default function Reminder({ reminder }) {
   return (
     <div className="reminder-item">
       <div className="reminder-info">
+        <div>{reminder.title}</div>
         {reminder.date_time}
         <div>{reminder.description}</div>
         {show && (
           <div>
-            <div>Recurring: {`${reminder.recurring}`}</div>
-            <div>Location: {reminder.location}</div>
             <div>Status: {reminder.status}</div>
+            <div>Location: {reminder.location}</div>
+            <div>Recurring: {`${reminder.recurring}`}</div>
           </div>
         )}
       </div>

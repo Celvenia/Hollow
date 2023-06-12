@@ -35,7 +35,7 @@ def create_reminder():
 
     datetime_str = request.json.get('date_time')
     date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
-
+    print(date_time)
     if date_time < now:
         return jsonify(error=["Unable to set reminder in the past"])
     title = request.json.get('title')
