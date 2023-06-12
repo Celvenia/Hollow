@@ -126,9 +126,6 @@ touch .env
 REACT_APP_BASE_URL=http://localhost:5000
 ```
 
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-
 ## Deployment through Render.com
 
 First, refer to your Render.com deployment articles for more detailed
