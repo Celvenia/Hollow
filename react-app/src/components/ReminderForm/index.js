@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { checkAndUpdateReminders, postReminder } from "../../store/reminder";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./ReminderForm.css"
+import "./ReminderForm.css";
 
 // date default input - yyyy-mm-dd
 // time default input - HH:mm
@@ -14,14 +14,13 @@ export default function ReminderForm() {
   const handleAddReminder = async (e) => {
     e.preventDefault();
     setErrors([]);
-    const { date, title, description, location, recurring } =
-      e.target.elements;
+    const { date, title, description, location, recurring } = e.target.elements;
 
-      let inputDate = new Date(date.value)
-      if (new Date() > inputDate) {
-        setErrors(["Cannot set reminder in the past"])
-        return;
-      }
+    let inputDate = new Date(date.value);
+    if (new Date() > inputDate) {
+      setErrors(["Cannot set reminder in the past"]);
+      return;
+    }
 
     const newReminder = {
       date_time: date.value,
@@ -31,22 +30,20 @@ export default function ReminderForm() {
       recurring: recurring.checked,
       status: "active",
     };
-    setErrors([])
-    let data = dispatch(postReminder(newReminder))
-    if (data) {
-      setErrors(data);
-    } else {
-      closeModal();
-    }
+    dispatch(postReminder(newReminder));
+    closeModal();
   };
-
 
   return (
     <div className="reminders">
       {errors.length > 0 && (
         <div className="error-container">
           {errors.map((error, index) => (
-            <p key={index} className="error-message"  onClick={(e) => setErrors([])}>
+            <p
+              key={index}
+              className="error-message"
+              onClick={(e) => setErrors([])}
+            >
               {error}
             </p>
           ))}
