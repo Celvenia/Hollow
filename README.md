@@ -262,7 +262,8 @@ Advice for common problems or issues.
 * Responses have a set token limit
 
 ## Authors
-
 Contributors name
-
 ex. Christopher Elvenia
+
+## Reach Me
+chriselvenia@gmail.com
