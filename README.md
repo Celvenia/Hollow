@@ -19,9 +19,8 @@ Shadow is an ai personal assistant utilizing openai's api for questions. The ans
 <br>
 
 **Table of Contents**
+- [About The Project](#Description)
 - [Live Link](#live-link)
-- [About The Project](#about-the-project)
-- [Wiki](#wiki)
 - [Built With](#built-with)
 - [Features](#features)
 - [Future Feature Ideas](#future-feature-ideas)
@@ -32,6 +31,12 @@ Shadow is an ai personal assistant utilizing openai's api for questions. The ans
 
 ## Live Link
 https://hollow.onrender.com/
+
+## Built With
+* python
+* flask
+* javascript
+* react
 
 ## Features
 ### Of note, no social aspect to this project
