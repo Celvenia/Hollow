@@ -6,7 +6,8 @@
 - [Built With](#built-with)
 - [Features](#features)
 - [Future Feature Ideas](#future-feature-ideas)
-  - [Reach Me](#reach-me)
+- [Verbal Commands](#verbal-commands)
+- [Reach Me](#reach-me)
 
 <br>
 
@@ -242,15 +243,10 @@ your site just below the name of the Web Service at the top of the page.
 
 * After you've signed up or logged in
 
-1:  Verbal commands utilize Shadow 
-      * Preface command with ```Shadow```    
-      ```
-      Shadow what is 2+2?
-      ```
-      * Navigate to pages, currently only home, notes, and reminders available
-      ```Navigate to home```
-      * Stop active listening
-      ```Stop listening```
+## Verbal commands
+* Preface command with "Shadow" when interacting with voice and openai's api. I.e. "Shadow what is 2+2?"
+* Navigate to pages, currently only home, notes, and reminders available "Navigate to home"
+* Stop active listening "Stop listening"
 
 ## Help
 
