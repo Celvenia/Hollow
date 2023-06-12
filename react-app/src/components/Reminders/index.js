@@ -8,18 +8,21 @@ import Reminder from "../Reminder";
 export default function Reminders() {
   const remindersObj = useSelector((state) => state.reminderReducer);
   const remindersArr = Object.values(remindersObj);
+  const activeRemindersArr = remindersArr.filter(
+    (reminder) => reminder.status === "active"
+  );
   const [reminders, setReminders] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAndUpdateReminders())
+    dispatch(checkAndUpdateReminders());
   }, [dispatch]);
 
   return (
     <div>
       <h4 className="reminders-title">Reminders</h4>
 
-      {remindersArr.length === 0 ? (
+      {activeRemindersArr.length === 0 ? (
         <p className="no-reminders">No reminders.</p>
       ) : (
         <ul className="reminders-list">

@@ -82,11 +82,6 @@ def update_reminder(id):
     recurring = request.json.get('recurring')
     location = request.json.get('location')
     # status = request.json.get('status')
-
-    if parsed_date_time >= now:
-        reminder.status = "completed"
-    if parsed_date_time < now:
-        reminder.status = "active"
     reminder.date_time = parsed_date_time or reminder.date_time
     reminder.title = title or reminder.title
     reminder.description = description or reminder.description
