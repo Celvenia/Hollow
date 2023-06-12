@@ -73,7 +73,7 @@ https://hollow.onrender.com/
 1: git clone https://github.com/Celvenia/Shadow.git
 
 2: download dependencies
-      * ```pipenv install -r requirements.txt```
+```pipenv install -r requirements.txt```
       
 3: Create a .env file based on the example with proper settings for your development environment
 
@@ -82,27 +82,28 @@ https://hollow.onrender.com/
 5: This starter organizes all tables inside the flask_schema schema, defined by the SCHEMA environment variable. Replace the value for SCHEMA with a unique name, making sure you use the snake_case convention.
 
 6: Get into your pipenv, migrate your database, seed your database, and run your Flask app
-      * ```pipenv shell```
-      * ```npm install openai```
-      * ```flask db upgrade```
-      * ```flask seed all```
-      * ```flask run```
+```shell pipenv```
+```shell npm install openai```
+```shell flask db upgrade```
+```shell flask seed all```
+```shell flask run```
       
 7: You'll need to signup with OpenAI for an API key which you'll then place in your root environment.
 
 8: Your root env should look like this
-      * ``` SECRET_KEY=your_secret_key
-            DATABASE_URL=sqlite:///dev.db
-            SCHEMA=unique_schema_name
-            OPEN_AI_KEY=your_openai_key```
+```shell 
+SECRET_KEY=your_secret_key
+DATABASE_URL=sqlite:///dev.db
+SCHEMA=unique_schema_name
+OPEN_AI_KEY=your_openai_key```
  
 9: navigate to the react-app folder
-      * ```cd react-app```
-      * ```npm install```
-      * create .env file in react-app
-            * ```touch .env```
-      * place this inside your .env file
-            * ```REACT_APP_BASE_URL=http://localhost:5000```
+```shell cd react-app```
+```shell npm install```
+* create .env file in react-app
+```shell touch .env```
+* place this inside your .env file
+```shell REACT_APP_BASE_URL=http://localhost:5000```
 
 7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
