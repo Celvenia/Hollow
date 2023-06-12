@@ -11,7 +11,9 @@ Shadow is an ai personal assistant utilizing openai's api for questions. The ans
 ![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592347/Personal%20Assistant/Shadow_kfiukq.png)
 
 ## Screenshots
+### Landing Page
 ![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592608/Personal%20Assistant/Screenshot_2023-06-11_235947_zagr7j.png)
+### Home Page (Once User logged in)
 ![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592595/Personal%20Assistant/Screenshot_2023-06-11_235841_uodsov.png)
 
 <br>
