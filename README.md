@@ -5,7 +5,7 @@ A simple AI personal assistant
 
 ## Description
 
-Shadow is an semi ai personal assistant utilizing openai's api for questions. The answers you can then store in notes or just continue the conversation. Pending geolocation and alarm functionality, will allow for reminders to be stored and automatically provide an update to length of time to arrive if latitude/longitude based, and/or an accompanied alarm.
+Shadow is an ai personal assistant utilizing openai's api for questions. The answers you can then store in notes or just continue the conversation. Pending geolocation and alarm functionality, will allow for reminders to be stored and automatically provide an update to length of time to arrive if latitude/longitude based, and/or an accompanied alarm.
 
 ## Schema
 ![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592347/Personal%20Assistant/Shadow_kfiukq.png)
