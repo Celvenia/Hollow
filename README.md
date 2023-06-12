@@ -1,46 +1,139 @@
-# Flask React Project
+# Shadow
 
-This is the starter for the Flask React project.
+**Table of Contents**
+- [About The Project](#Description)
+- [Live Link](#live-link)
+- [Built With](#built-with)
+- [Features](#features)
+- [Future Feature Ideas](#future-feature-ideas)
+- [Verbal Commands](#verbal-commands)
+- [Reach Me](#reach-me)
 
-## Getting started
-1. Clone this repository (only this branch)
+<br>
 
-2. Install dependencies
+## Goal
+A simple AI personal assistant
 
-      ```bash
-      pipenv install -r requirements.txt
-      ```
+## Description
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
+Shadow is an ai personal assistant utilizing openai's api for questions. The answers you can then store in notes or just continue the conversation. Pending geolocation and alarm functionality, will allow for reminders to be stored and automatically provide an update to length of time to arrive if latitude/longitude based, and/or an accompanied alarm.
 
-4. Make sure the SQLite3 database connection URL is in the **.env** file
+## Schema
+![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592347/Personal%20Assistant/Shadow_kfiukq.png)
 
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
+## Screenshots
+### Landing Page
+![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592608/Personal%20Assistant/Screenshot_2023-06-11_235947_zagr7j.png)
+### Home Page (Once User logged in)
+![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592595/Personal%20Assistant/Screenshot_2023-06-11_235841_uodsov.png)
 
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
+<br>
 
-   ```bash
-   pipenv shell
-   ```
+## Live Link
+https://hollow.onrender.com/
 
-   ```bash
-   flask db upgrade
-   ```
+## Built With
+* python
+* flask
+* javascript
+* react
 
-   ```bash
-   flask seed all
-   ```
+## Features
+### Of note, no social aspect to this project
 
-   ```bash
-   flask run
-   ```
+**<h3>Notes</h3>**
+* <p>Users can create, read, update, and delete only their own Notes while logged in</p>
+* <p>Pending** Create note through voice recognition </p>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593718/Personal%20Assistant/CreateNote.png"/>
 
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+**<h3>Reminders</h3>**
+* <p>Users can create reminders through calendar.</p>
+* <p>Users can view reminders created in short and long form </p>
+* <p>Users can update and delete reminders. If reminder time has passed, will automatically be removed from view (currently linked to mountain time)</p>
+* <p>Pending** Reminder times will be linked to alarm clock</p>
+* <p>Pending** Create reminder through voice recognition </p>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593643/Personal%20Assistant/ReminderInput.png"/>
+<br>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593718/Personal%20Assistant/ReminderQuickView.png"/>
+<br>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120906_c8dhss.png"/>
+<br>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120939_w9sft2.png"/>
+<br>
 
+**<h3>Conversations</h3>**
+* <p>Logged in users can interact with open ai's api through voice and store conversation history</p>
+* <p>Users can create new conversations, view conversations, update the title of each conversation, delete conversations</p>
+* <p>Only messages sent to open ai's api will be stored, voice interaction for time, date, navigation are not </p>
+<br>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ActiveShadow.png"/>
+<br>
+<img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ConversationHistory.png"/>
+
+## Future Feature Ideas
+* Search
+* Image Generation
+* Google maps Integration
+* Voice Initiation
+
+## Getting Started
+### Dependencies
+
+1: git clone https://github.com/Celvenia/Shadow.git
+
+2: download dependencies
+```shell 
+pipenv install -r requirements.txt
+```
+      
+3: Create a .env file based on the example with proper settings for your development environment
+
+4: Make sure the SQLite3 database connection URL is in the .env file
+
+5: This starter organizes all tables inside the flask_schema schema, defined by the SCHEMA environment variable. Replace the value for SCHEMA with a unique name, making sure you use the snake_case convention.
+
+6: Get into your pipenv, migrate your database, seed your database, and run your Flask app
+```shell 
+pipenv shell
+```
+```shell 
+npm install openai
+```
+```shell 
+flask db upgrade
+```
+```shell 
+flask seed all
+```
+```shell 
+flask run
+```
+      
+7: You'll need to signup with OpenAI for an API key which you'll then place in your root environment.
+
+8: Your root env should look like this
+```shell
+SECRET_KEY=your_secret_key
+DATABASE_URL=sqlite:///dev.db
+SCHEMA=unique_schema_name
+OPEN_AI_KEY=your_openai_key
+```
+ 
+9: navigate to the react-app folder
+```shell 
+cd react-app
+```
+```shell 
+npm install
+```
+* create .env file in react-app
+```shell 
+touch .env
+```
+* place this inside your .env file
+```shell 
+REACT_APP_BASE_URL=http://localhost:5000
+```
 
 ## Deployment through Render.com
 
@@ -145,6 +238,34 @@ application every time you push to main.
 Now, you are finally ready to deploy! Click "Create Web Service" to depl
 
 [Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/# Hollow
 
+* tested on google chrome
+* deployed on render
 
+### Executing program
+
+* After you've signed up or logged in
+
+## Verbal commands
+* Preface command with "Shadow" when interacting with voice and openai's api. I.e. "Shadow what is 2+2?"
+* Navigate to pages, currently only home, notes, and reminders available "Navigate to home"
+* Stop active listening "Stop listening"
+* Stop request "ignore"
+* Current time "What is the current time"
+* Current date "What is the current date"
+
+## Help
+
+Advice for common problems or issues.
+
+* Known issue when setting reminders as project is based off of Mountain Time 
+* Voice response with lengthy responses may not work as intended due to auto delay turn off feature
+* Some limitations on current events and information due to data 
+* Responses have a set token limit
+
+## Authors
+Contributors name
+ex. Christopher Elvenia
+
+## Reach Me
+chriselvenia@gmail.com
