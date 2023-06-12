@@ -73,7 +73,7 @@ https://hollow.onrender.com/
 1: git clone https://github.com/Celvenia/Shadow.git
 
 2: download dependencies
-      * pipenv install -r requirements.txt
+      * ```pipenv install -r requirements.txt```
       
 3: Create a .env file based on the example with proper settings for your development environment
 
