@@ -68,8 +68,9 @@ https://hollow.onrender.com/
 
 ## Future Feature Ideas
 * Search
-* Order history
-* Incorporate AWS
+* Image Generation
+* Google maps Integration
+* Voice Initiation
 
 ## Getting Started
 ### Dependencies
