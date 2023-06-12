@@ -73,7 +73,7 @@ https://hollow.onrender.com/
 1: git clone https://github.com/Celvenia/Shadow.git
 
 2: download dependencies
-```pipenv install -r requirements.txt```
+```shell pipenv install -r requirements.txt```
       
 3: Create a .env file based on the example with proper settings for your development environment
 
@@ -91,11 +91,12 @@ https://hollow.onrender.com/
 7: You'll need to signup with OpenAI for an API key which you'll then place in your root environment.
 
 8: Your root env should look like this
-```shell 
+```shell
 SECRET_KEY=your_secret_key
 DATABASE_URL=sqlite:///dev.db
 SCHEMA=unique_schema_name
-OPEN_AI_KEY=your_openai_key```
+OPEN_AI_KEY=your_openai_key
+```
  
 9: navigate to the react-app folder
 ```shell cd react-app```
