@@ -46,9 +46,13 @@ https://hollow.onrender.com/
 * <p>Pending** Reminder times will be linked to alarm clock</p>
 * <p>Pending** Create reminder through voice recognition </p>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593643/Personal%20Assistant/ReminderInput.png"/>
+<br>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593718/Personal%20Assistant/ReminderQuickView.png"/>
+<br>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120906_c8dhss.png"/>
+<br>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/Screenshot_2023-06-12_120939_w9sft2.png"/>
+<br>
 
 **<h3>Conversations</h3>**
 * <p>Logged in users can interact with open ai's api through voice and store conversation history</p>
