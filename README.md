@@ -1,5 +1,15 @@
 # Shadow
 
+**Table of Contents**
+- [About The Project](#Description)
+- [Live Link](#live-link)
+- [Built With](#built-with)
+- [Features](#features)
+- [Future Feature Ideas](#future-feature-ideas)
+  - [Reach Me](#reach-me)
+
+<br>
+
 ## Goal
 A simple AI personal assistant
 
@@ -17,17 +27,6 @@ Shadow is an ai personal assistant utilizing openai's api for questions. The ans
 ![](https://res.cloudinary.com/dtzv3fsas/image/upload/v1686592595/Personal%20Assistant/Screenshot_2023-06-11_235841_uodsov.png)
 
 <br>
-
-**Table of Contents**
-- [About The Project](#Description)
-- [Live Link](#live-link)
-- [Built With](#built-with)
-- [Features](#features)
-- [Future Feature Ideas](#future-feature-ideas)
-  - [Reach Me](#reach-me)
-
-<br>
-
 
 ## Live Link
 https://hollow.onrender.com/
