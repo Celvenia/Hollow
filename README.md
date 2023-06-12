@@ -64,7 +64,10 @@ https://hollow.onrender.com/
 **<h3>Conversations</h3>**
 * <p>Logged in users can interact with open ai's api through voice and store conversation history</p>
 * <p>Users can create new conversations, view conversations, update the title of each conversation, delete conversations</p>
+* <p>Only messages sent to open ai's api will be stored, voice interaction for time, date, navigation are not </p>
+<br>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ActiveShadow.png"/>
+<br>
 <img src="https://res.cloudinary.com/dtzv3fsas/image/upload/v1686593719/Personal%20Assistant/ConversationHistory.png"/>
 
 ## Future Feature Ideas
