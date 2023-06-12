@@ -247,6 +247,9 @@ your site just below the name of the Web Service at the top of the page.
 * Preface command with "Shadow" when interacting with voice and openai's api. I.e. "Shadow what is 2+2?"
 * Navigate to pages, currently only home, notes, and reminders available "Navigate to home"
 * Stop active listening "Stop listening"
+* Stop request "ignore"
+* Current time "What is the current time"
+* Current date "What is the current date"
 
 ## Help
 
