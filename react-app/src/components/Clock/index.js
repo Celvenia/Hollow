@@ -1,28 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import HollowKnightDD from "../../assets/HollowKnightDD.mp3";
 import "./Clock.css";
+import { checkAndUpdateReminders } from "../../store/reminder";
 
 export default function Clock() {
+  const remindersObj = useSelector((state) => state.reminderReducer);
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
   const [alarmTime, setAlarmTime] = useState("");
   const [isAlarmSet, setIsAlarmSet] = useState(false);
   const [isSnoozeEnabled, setIsSnoozeEnabled] = useState(false);
+  const [timeToAlarm, setTimeToAlarm] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const [alarmHour, alarmMinute] = alarmTime.split(":");
+    if (
+      parseInt(alarmHour, 10) === currentHour &&
+      parseInt(alarmMinute, 10) === currentMinute
+    ) {
+      setTimeToAlarm(true);
+    }
+
     const timer = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
     }, 1000);
+
     return () => {
       clearInterval(timer);
     };
-  }, [alarmTime]);
+  }, [currentTime]);
 
+  useEffect(() => {
+    dispatch(checkAndUpdateReminders());
+  }, [dispatch]);
 
   const handleRemoveAlarm = () => {
     setAlarmTime("");
     setIsAlarmSet(false);
     setIsSnoozeEnabled(false);
+    setTimeToAlarm(false);
   };
 
   const handleAlarmChange = (e) => {
@@ -40,9 +62,9 @@ export default function Clock() {
     setIsSnoozeEnabled(true);
     setTimeout(() => {
       setIsSnoozeEnabled(false);
-    }, 5000);
+    }, 60000);
   };
-  
+
 
   return (
     <div className="clock flex-column-center">
@@ -73,6 +95,12 @@ export default function Clock() {
           </button>
         )}
       </div>
+      {timeToAlarm && !isSnoozeEnabled && (
+        <audio autoPlay loop>
+          <source src={HollowKnightDD} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      )}
     </div>
   );
 }

@@ -22,7 +22,7 @@ def get_reminder(id):
     reminder = Reminder.query.get(id)
 
     if not reminder:
-        return jsonify(error=[f"Unable to find reminder associated with id {id}"])
+        return jsonify(error=[f"Unable to find reminder associated with id {id}"]), 404
 
     return reminder.to_dict()
 
@@ -31,17 +31,18 @@ def get_reminder(id):
 @reminder_routes.route('', methods=['POST'])
 @login_required
 def create_reminder():
-    current = datetime.now()
+    now = datetime.now()
 
     datetime_str = request.json.get('date_time')
     date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
-    if date_time < current:
-        return {'errors': ['Cannot set reminder in the past']}
+
+    if date_time < now:
+        return jsonify(error=["Unable to set reminder in the past"])
     title = request.json.get('title')
     description = request.json.get('description')
     recurring = request.json.get('recurring')
     location = request.json.get('location')
-    status = request.json.get('status')
+    # status = request.json.get('status')
     user_id = current_user.id
 
     new_reminder = Reminder(
@@ -50,7 +51,7 @@ def create_reminder():
         description=description,
         recurring=recurring,
         location=location,
-        status=status,
+        status="active",
         user_id=user_id
     )
 
@@ -67,23 +68,12 @@ def update_reminder(id):
     reminder = Reminder.query.get(id)
 
     if not reminder:
-        return jsonify(error=[f"Unable to find reminder associated with id {id}"])
+        return jsonify(error=[f"Unable to find reminder associated with id {id}"]), 404
 
     if reminder.user_id != current_user.id:
         return jsonify(error=["You don't have permission to update this reminder"]), 401
 
     now = datetime.now()
-    now_local = now + timedelta(hours=10, minutes=9)
-
-    date_str = now_local.strftime('%Y-%m-%d')  # format 'YYYY-MM-DD'
-    date_local = date_str[:10]
-
-    time_str = now_local.strftime('%H:%M:%S')  # format 'HH:MM:SS'
-    time_local = time_str[:8]
-    reminder_date_str = reminder.date_time.strftime('%Y-%m-%d')
-    reminder_date = reminder_date_str[:10]
-    reminder_time_str = reminder.date_time.strftime('%H:%M:%S')
-    reminder_time = reminder_time_str[:8]
 
     datetime_str = request.json.get('date_time')
     parsed_date_time = datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
@@ -91,18 +81,17 @@ def update_reminder(id):
     description = request.json.get('description')
     recurring = request.json.get('recurring')
     location = request.json.get('location')
-    status = request.json.get('status')
+    # status = request.json.get('status')
 
-    reminder.status = status or reminder.status
+    if parsed_date_time >= now:
+        reminder.status = "completed"
+    if parsed_date_time < now:
+        reminder.status = "active"
     reminder.date_time = parsed_date_time or reminder.date_time
     reminder.title = title or reminder.title
     reminder.description = description or reminder.description
     reminder.recurring = recurring or reminder.recurring
     reminder.location = location or reminder.location
-    if date_local > reminder_date:
-        reminder.status = "completed"
-    elif date_local == reminder_date and time_local > reminder_time:
-        reminder.status = "completed"
     reminder.updated_at = datetime.utcnow()
 
     db.session.commit()
@@ -117,7 +106,7 @@ def delete_reminder(id):
     reminder = Reminder.query.get(id)
 
     if not reminder:
-        return jsonify(error=[f"Unable to find reminder associated with id {id}"])
+        return jsonify(error=[f"Unable to find reminder associated with id {id}"]), 404
 
     if reminder.user_id != current_user.id:
         return jsonify(error=["You don't have permission to delete this reminder"]), 401
@@ -133,25 +122,11 @@ def delete_reminder(id):
 @login_required
 def check_and_update_reminders():
     now = datetime.now()
-    now_local = now + timedelta(hours=10, minutes=9)
-
-    date_str = now_local.strftime('%Y-%m-%d')  # format 'YYYY-MM-DD'
-    date_local = date_str[:10]
-
-    time_str = now_local.strftime('%H:%M:%S')  # format 'HH:MM:SS'
-    time_local = time_str[:8]
 
     reminders = Reminder.query.filter_by(user_id=current_user.id).all()
 
     for reminder in reminders:
-        reminder_date_str = reminder.date_time.strftime('%Y-%m-%d')
-        reminder_date = reminder_date_str[:10]
-        reminder_time_str = reminder.date_time.strftime('%H:%M:%S')
-        reminder_time = reminder_time_str[:8]
-
-        if date_local > reminder_date:
-            reminder.status = "completed"
-        elif date_local == reminder_date and time_local > reminder_time:
+        if(reminder.date_time <= now):
             reminder.status = "completed"
 
     db.session.commit()

@@ -15,6 +15,7 @@ export default function Note({ note }) {
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [display, setDisplay] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -39,16 +40,26 @@ export default function Note({ note }) {
   };
 
   const handleTitleBlur = () => {
+    setErrors([]);
     if (title !== newTitle) {
-      setTitle(newTitle);
-      handleUpdateClick();
+      if (!title || !newTitle) {
+        setErrors(["Title or content cannot be empty"]);
+      } else {
+        setTitle(newTitle);
+        handleUpdateClick();
+      }
     }
     setEditMode(false);
   };
 
   const handleUpdateClick = () => {
-    const updatedNote = { ...note, title: newTitle, content };
-    dispatch(updateNote(updatedNote));
+    setErrors([]);
+    if (!title || content === "") {
+      setErrors(["Title or Content cannot be empty"]);
+    } else {
+      const updatedNote = { ...note, title: newTitle, content };
+      dispatch(updateNote(updatedNote));
+    }
   };
 
   const handleDeleteClick = () => {
@@ -56,46 +67,60 @@ export default function Note({ note }) {
     setDisplay(false);
   };
 
-  return display && (
-    <div className="note-page">
-      <section className="note-container">
-        {!note ? (
-          ""
-        ) : editMode ? (
-          <input
-            type="text"
-            value={newTitle}
-            onChange={handleTitleChange}
-            onBlur={handleTitleBlur}
-            autoFocus
-          />
-        ) : (
-          <div className="note-title">
-            <h4>{title}</h4>
-            <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
+  return (
+    display && (
+      <div className="note-page">
+        <section className="note-container">
+          <div className="error-container">
+            {errors.map((error, index) => (
+              <p
+                key={index}
+                className="error-message"
+                onClick={(e) => setErrors([])}
+              >
+                {error}
+              </p>
+            ))}
           </div>
-        )}
+          {!note ? (
+            ""
+          ) : editMode ? (
+            <input
+              type="text"
+              value={newTitle}
+              onChange={handleTitleChange}
+              onBlur={handleTitleBlur}
+              autoFocus
+            />
+          ) : (
+            <div className="note-title">
+              <h4>{title}</h4>
+              <FontAwesomeIcon icon={faPen} onClick={handleEditClick} />
+            </div>
+          )}
 
-        {!loading && (
-          <form>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="note-textarea"
-            ></textarea>
-          </form>
-        )}
+          {!loading && (
+            <form>
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                className="note-textarea"
+                required
+              ></textarea>
+            </form>
+          )}
 
-        {note && (
-          <div className="note-buttons">
-            <button onClick={handleUpdateClick} className="note-file-button">
-              <FontAwesomeIcon icon={faFile} />
-              Save Note
-            </button>
-            <button onClick={handleDeleteClick}>Delete</button>
-          </div>
-        )}
-      </section>
-    </div>
+          {note && (
+            <div className="note-buttons">
+              <button onClick={handleUpdateClick} className="note-file-button">
+                <FontAwesomeIcon icon={faFile} />
+                Save Note
+              </button>
+              <button onClick={handleDeleteClick}>Delete</button>
+            </div>
+          )}
+        </section>
+      </div>
+    )
   );
 }

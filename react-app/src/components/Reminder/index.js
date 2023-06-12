@@ -10,19 +10,6 @@ import { useDispatch } from "react-redux";
 import ReminderEditForm from "../ReminderEditForm";
 import OpenModalButton from "../OpenModalButton";
 
-// {
-//     "created_at": "Sat, 03 Jun 2023 18:40:44 GMT",
-//     "date": "Mon, 05 Jun 2023 00:00:00 GMT",
-//     "description": "Weekly Testing",
-//     "id": 1,
-//     "location": "Testing Room",
-//     "recurring": true,
-//     "status": "inactive", or completed/cancelled
-//     "time": "09:00 AM",
-//     "title": "Testing",
-//     "updated_at": "Sat, 03 Jun 2023 18:58:16 GMT",
-//     "user_id": 1
-// }
 
 export default function Reminder({ reminder }) {
   const [show, setShow] = useState(false);

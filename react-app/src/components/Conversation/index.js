@@ -37,8 +37,6 @@ export default function Conversation() {
   const dropdownRef = useRef();
   const conversation = conversationsObj[id] || undefined;
 
-  // const [messages, setMessages] = useState(null);
-
   const handleEditClick = () => {
     setEditMode(true);
     setNewTitle(title);
@@ -161,7 +159,7 @@ export default function Conversation() {
         className="length-100 conversation-button-container"
       >
         {display && conversation && (
-          <button onClick={handleScrollToBottom}>⇩</button>
+          <button title="scroll down" onClick={handleScrollToBottom}>⇩</button>
         )}
         {show ? (
           <>
@@ -199,19 +197,19 @@ export default function Conversation() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
-            <button onClick={handleDeleteConversationClick}>
+            <button onClick={handleDeleteConversationClick} title="delete conversation">
               Delete Conversation
             </button>
           </>
         ) : (
           <>
-            <button onClick={handleConversationShowClick}>
+            <button onClick={handleConversationShowClick} title="hide conversation messages">
               <FontAwesomeIcon icon={faEye} />
             </button>
             <button onClick={handleIconClick}>
               <FontAwesomeIcon icon={faComments} className="nav-icon" />
             </button>
-            <button onClick={handleCreateConversation}>
+            <button onClick={handleCreateConversation} title="create conversation">
               <FontAwesomeIcon icon={faPlus} />
             </button>
             {!showDropdown ? (
@@ -283,7 +281,7 @@ export default function Conversation() {
               ))}
             {display && conversation && (
               <div className="scroll-top-button">
-                <button onClick={handleScrollToTop} ref={bottomOfConversation}>
+                <button onClick={handleScrollToTop} ref={bottomOfConversation} title="scroll up">
                   ⇧
                 </button>
               </div>

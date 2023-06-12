@@ -11,24 +11,33 @@ export default function ReminderForm() {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
-  const handleUpdateReminder = (e) => {
+  const handleAddReminder = async (e) => {
     e.preventDefault();
     setErrors([]);
     const { date, title, description, location, recurring } =
       e.target.elements;
 
+      let inputDate = new Date(date.value)
+      if (new Date() > inputDate) {
+        setErrors(["Cannot set reminder in the past"])
+        return;
+      }
+
     const newReminder = {
       date_time: date.value,
       title: title.value,
       description: description.value,
-      location: location.value || false,
+      location: location.value || "undefined",
       recurring: recurring.checked,
       status: "active",
     };
-  
-
-    dispatch(postReminder(newReminder));
-    closeModal();
+    setErrors([])
+    let data = dispatch(postReminder(newReminder))
+    if (data) {
+      setErrors(data);
+    } else {
+      closeModal();
+    }
   };
 
 
@@ -37,13 +46,13 @@ export default function ReminderForm() {
       {errors.length > 0 && (
         <div className="error-container">
           {errors.map((error, index) => (
-            <p key={index} className="error-message">
+            <p key={index} className="error-message"  onClick={(e) => setErrors([])}>
               {error}
             </p>
           ))}
         </div>
       )}
-      <form className="reminder-form" onSubmit={handleUpdateReminder}>
+      <form className="reminder-form" onSubmit={handleAddReminder}>
         <h4 className="reminders-heading">Set Reminder</h4>
         <label className="form-label">Date:</label>
         <input

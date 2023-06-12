@@ -118,7 +118,14 @@ Add the following keys and values in the Render GUI form:
 - FLASK_APP app
 - SCHEMA (your unique schema name, in snake_case)
 - REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
+  htoy your
+project. The deployment process will likely take about 10-15 minutes if
+everything works as expected. You can monitor the logs to see your build and
+start commands being executed, and see any errors in the build process.
+
+When deployment is complete, open your deployed site and check to see if you
+successfully deployed your Flask application to Render! You can find the URL for
+your site just below the name of the Web Service at the top of the page.tps://this-application-name.onrender.com)
 
 In a new tab, navigate to your dashboard and click on your Postgres database
 instance.
@@ -135,14 +142,9 @@ environment variables to the Render GUI as well for the next deployment._
 Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
 application every time you push to main.
 
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
+Now, you are finally ready to deploy! Click "Create Web Service" to depl
 
 [Render.com]: https://render.com/
 [Dashboard]: https://dashboard.render.com/# Hollow
+
+
