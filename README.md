@@ -97,7 +97,7 @@ pipenv install -r requirements.txt
 pipenv shell
 ```
 ```shell 
-npm install openai
+pip install openai
 ```
 ```shell 
 flask db upgrade
