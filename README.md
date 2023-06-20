@@ -168,12 +168,12 @@ one line:
 
 ```shell
 # build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
+npm install --prefix react-app && 
+npm run build --prefix react-app && 
+pip install -r requirements.txt && 
+pip install psycopg2 && 
+pip install openai && 
+flask db upgrade && flask seed all
 ```
 
 This script will install dependencies for the frontend, and run the build
@@ -206,20 +206,14 @@ need for the production environment.
 
 Add the following keys and values in the Render GUI form:
 
+
 - SECRET_KEY (click "Generate" to generate a secure secret for production)
 - FLASK_ENV production
 - FLASK_APP app
 - SCHEMA (your unique schema name, in snake_case)
 - REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  htoy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.tps://this-application-name.onrender.com)
-
+  https://this-application-name.onrender.com) .
+- OPEN_AI_KEY (your unique API key from OpenAI)
 In a new tab, navigate to your dashboard and click on your Postgres database
 instance.
 
@@ -227,15 +221,14 @@ Add the following keys and values:
 
 - DATABASE_URL (copy value from Internal Database URL field)
 
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
 
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
+_Note: Add any other keys and values that may be present in your local .env file. As you work to further develop your project, you may need to add more environment variables to your local .env file. Make sure you add these environment variables to the Render GUI as well for the next deployment.
 
-Now, you are finally ready to deploy! Click "Create Web Service" to depl
+Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your application every time you push to main.
+
+Now, you are finally ready to deploy! Click "Create Web Service" to deploy your project. The deployment process will likely take about 10-15 minutes if everything works as expected. You can monitor the logs to see your build and start commands being executed, and see any errors in the build process.
+
+When deployment is complete, open your deployed site and check to see if you successfully deployed your Flask application to Render! You can find the URL for your site just below the name of the Web Service at the top of the page.
 
 [Render.com]: https://render.com/
 
